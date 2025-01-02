@@ -1,7 +1,7 @@
-# gamificacion
+# 📚 Gamificación
 Este proyecto implementa una plataforma de gamificación para reforzar el aprendizaje mediante juegos interactivos como crucigramas, sopas de letras y quizzes. Está dividido en dos partes principales: un frontend basado en Django y un backend basado en FastAPI, con Firebase como base de datos.
 
-# Estructura del Proyecto
+# 🌟 Estructura del Proyecto
 
 gamificacion/
 ├── backend/               # Backend implementado con FastAPI
@@ -15,7 +15,7 @@ gamificacion/
 │   ├── requirements.txt   # Dependencias del backend
 │   └── tests/             # Pruebas unitarias del backend
 ├── frontend/              # Frontend implementado con Django
-│   ├── gamificacion/      # Código principal del frontend
+│   ├── src/               # Código principal del frontend
 │   │   ├── settings.py    # Configuración de Django
 │   │   ├── urls.py        # Rutas del frontend
 │   │   ├── templates/     # Plantillas HTML para las vistas
