@@ -67,3 +67,50 @@ Antes de comenzar, asegúrate de tener instalado:
    Con el entorno virtual activado, instala Django:
    ```bash
    pip install django
+   
+### **Configuración de Tailwind CSS**
+
+1. **Inicializar npm**
+
+   En la carpeta principal del frontend, inicializa un proyecto npm:
+   ```bash
+   npm init -y
+
+2. **Instalar Tailwind CSS y Dependencias**
+
+    Instala Tailwind CSS junto con sus dependencias PostCSS y Autoprefixer:
+    ```bash
+    npm install -D tailwindcss postcss autoprefixer
+   
+3. **Crear el Archivo de Configuración de Tailwind**
+
+    Genera el archivo tailwind.config.js con el siguiente comando:
+    ```bash
+    npx tailwindcss init
+   
+4. **Configurar el Archivo `tailwind.config.js`**
+
+   Edita el archivo generado `tailwind.config.js` y ajusta las rutas para que Tailwind pueda procesar tus plantillas HTML:
+
+   ```javascript
+   module.exports = {
+       content: [
+           './src/templates/**/*.html',  // Rutas de las plantillas HTML
+       ],
+       theme: {
+           extend: {},  // Configuración adicional opcional
+       },
+       plugins: [],  // Puedes agregar plugins si es necesario
+   };
+
+5. **Crear el Archivo CSS Principal**
+
+   Crea un archivo llamado `style.css` dentro de la carpeta `static/css` y agrega las directivas principales de Tailwind CSS:
+
+   ```css
+   @tailwind base;
+   @tailwind components;
+   @tailwind utilities;
+
+    
+
