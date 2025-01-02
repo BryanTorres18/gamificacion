@@ -30,3 +30,40 @@ gamificacion/
 │   └── config.json        # Archivo de configuración de Firebase 
 └── README.md              # Documentación del proyecto           
 
+## **Instalación del Frontend**
+
+### **Requisitos Previos**
+Antes de comenzar, asegúrate de tener instalado:
+
+- **Python 3.10** o superior
+- **Node.js y npm** (necesarios para Tailwind CSS)
+
+---
+
+### **Pasos para Configurar el Frontend**
+
+1. **Clonar el Repositorio**
+
+   Clona el repositorio en tu máquina local y navega a la carpeta `frontend`:
+   ```bash
+   git clone https://github.com/tu-usuario/tu-repositorio.git
+   cd tu-repositorio/frontend
+
+2. **Crear y Activar un Entorno Virtual**
+
+   - **Para Windows**:
+     ```bash
+     python -m venv env
+     env\Scripts\activate
+     ```
+   - **Para Mac/Linux**:
+     ```bash
+     python3 -m venv env
+     source env/bin/activate
+     ```
+
+3. **Instalar Django**
+
+   Con el entorno virtual activado, instala Django:
+   ```bash
+   pip install django
