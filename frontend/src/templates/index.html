@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Seleccionar Juego{% endblock %}
+
+{% block content %}
+<section class="text-center">
+    <h1 class="text-2xl font-bold mb-4">Selecciona un Tipo de Juego</h1>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4">
+        {% include "components/game_card.html" with game_type="Crucigrama" %}
+        {% include "components/game_card.html" with game_type="Sopa de Letras" %}
+    </div>
+</section>
+{% endblock %}

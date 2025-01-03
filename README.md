@@ -28,7 +28,7 @@ gamificacion/
 ├── firebase/              # Configuración de Firebase            
 │   ├── rules/             # Reglas de seguridad para Firestore   
 │   └── config.json        # Archivo de configuración de Firebase 
-└── README.md              # Documentación del proyecto           
+└── README.md              # Documentación del proyecto          
 
 ## **Instalación del Frontend**
 
