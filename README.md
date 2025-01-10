@@ -36,6 +36,9 @@ gamificacion/
 Antes de comenzar, asegúrate de tener instalado:
 
 - **Python 3.10** o superior
+- Una cuenta de Google Cloud configurada con Firestore habilitado
+- Un archivo de credenciales JSON descargado desde Google Cloud
+- pip para la gestión de paquetes
 - **Node.js y npm** (necesarios para Tailwind CSS)
 
 ---
@@ -112,5 +115,35 @@ Antes de comenzar, asegúrate de tener instalado:
    @tailwind components;
    @tailwind utilities;
 
+## **Pasos para configurar el Backend**
+
+1. Clona este repositorio:
+   ```bash
+   git clone https://github.com/tuusuario/tu-proyecto.git
+   cd tu-proyecto
+
+2. Crea un entorno virtual
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # Linux/MacOS
+    venv\Scripts\activate     # Windows
+
+3. Instalar las dependencias
+    ```bash
+    pip install -r requirements.txt
+
+4. Configurar las variables de entorno
+    - Crea un archivo .env en `backend/` con el siguiente contenido:
+    
+    ```
+    GOOGLE_APPLICATION_CREDENTIALS=gamificacion-credencial.json
+    ```
+5. Ejecutar el servidor
+    ```bash
+    uvicorn main:app --reload
+
+6. Acceder a la documentacion interactiva
+
+    - Abrir navegador y visitar: http://127.0.0.1:8000/docs
     
 
