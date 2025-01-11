@@ -1,0 +1,206 @@
+/* Reset y estilos base */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Asegura que el cuerpo ocupe toda la altura de la ventana */
+}
+
+/* Estilos del encabezado */
+.header {
+    background-color: #1d4ed8;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* Se extiende al ancho completo */
+    box-sizing: border-box; /* Incluye el padding en el ancho total */
+}
+
+.header h1 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.input-link {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px;
+}
+
+.btn-copy {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-copy:hover {
+    background-color: #1e3a8a;
+}
+
+/* Contenedor principal */
+.main-container {
+    flex: 1; /* Toma el espacio disponible entre el header y el footer */
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: auto;
+    box-sizing: border-box; /* Incluye el padding en el ancho total */
+}
+
+@media (min-width: 768px) {
+    .main-container {
+        grid-template-columns: 2fr 1fr;
+        align-items: flex-start;
+    }
+}
+
+/* Footer fijo */
+.footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    width: 100%; /* Se extiende al ancho completo */
+    box-sizing: border-box;
+    margin-top: auto; /* Empuja el footer hacia la parte inferior */
+}
+
+/* Área de juego */
+.game-area {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.board-container {
+    background-color: #e0e0e0;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    margin-top: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(10, 30px);
+    grid-template-rows: repeat(10, 30px);
+    gap: 5px;
+    background-color: white;
+    border-radius: 4px;
+}
+
+/* Celdas del tablero */
+.cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Efectos de selección */
+.cell.selected {
+    background-color: yellow;
+    color: black;
+    font-weight: bold;
+}
+
+.cell.found {
+    background-color: lightgreen;
+    color: black;
+    pointer-events: none;
+}
+
+.score-sidebar {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.game-info {
+    text-align: center;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.questions {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.questions li {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    border-bottom: 1px solid #ddd;
+}
+
+.questions li.found {
+    text-decoration: line-through;
+    color: gray;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 1.2rem;
+    }
+
+    .input-link {
+        width: 150px;
+    }
+
+    .btn-copy {
+        padding: 0.5rem;
+    }
+
+    .main-container {
+        padding: 1rem;
+    }
+
+    .score-sidebar {
+        padding: 1rem;
+    }
+
+    .game-area {
+        padding: 1rem;
+    }
+}
+
+
+

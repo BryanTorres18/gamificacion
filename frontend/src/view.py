@@ -10,3 +10,4 @@ def game_view(request):
     return render(request, 'game_view.html')
 
 
+

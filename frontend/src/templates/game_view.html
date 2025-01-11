@@ -1,49 +1,47 @@
-{% extends "base.html" %}
-
-{% block content %}
-
-<section class="bg-gray-100 font-sans">
-    <!-- Header -->
-    <header class="bg-blue-500 text-white p-4">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-lg font-bold">#JUEGO: #ID:000000</h1>
-            <div>
-                <label>
-                    <input type="text" value="www.juego/ad2Wfgc" class="p-1 rounded text-black" readonly>
-                </label>
-                <button onclick="copiarEnlace()" class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-1 rounded ml-2">Copiar Enlace</button>
-            </div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vista del Juego</title>
+    <link rel="stylesheet" href="../static/css/game_view.css">
+</head>
+<body>
+    <header class="header">
+        <h1>#JUEGO: #ID:000000</h1>
+        <div class="header-actions">
+            <label>
+                <input type="text" value="www.juego/ad2Wfgc" readonly class="input-link">
+            </label>
+            <button onclick="copiarEnlace()" class="btn-copy">Copiar Enlace</button>
         </div>
     </header>
-
-    <!-- Main Content -->
-    <main class="container mx-auto p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Game Area -->
-        <section class="lg:col-span-2 bg-white p-4 rounded shadow">
-            <h2 class="text-xl font-semibold mb-4">Área de Juego</h2>
-            <div class="grid grid-cols-5 gap-2">
-                <!-- Example grid for game (e.g., crossword or letter soup) -->
-                <div class="w-12 h-12 border flex items-center justify-center">A</div>
-                <div class="w-12 h-12 border flex items-center justify-center">B</div>
-                <div class="w-12 h-12 border flex items-center justify-center">C</div>
-                <div class="w-12 h-12 border flex items-center justify-center">D</div>
-                <div class="w-12 h-12 border flex items-center justify-center">E</div>
-                <!-- Add more cells dynamically -->
+    <main class="main-container">
+        <section class="game-area">
+            <h2>Área de Juego</h2>
+            <div class="board-container">
+                <div id="board" class="board"></div>
             </div>
         </section>
-
-        <!-- Sidebar -->
-        <aside class="bg-white p-4 rounded shadow">
-            <h2 class="text-xl font-semibold mb-4">Puntuación</h2>
-            <p class="mb-4">Puntuación Actual: <span class="font-bold text-blue-500">5/10</span></p>
-            <ul class="space-y-2">
-                <li class="border-b pb-2">Enunciado 1: <span class="font-bold">Lorem</span></li>
-                <li class="border-b pb-2">Enunciado 2: <span class="font-bold">Lorem</span></li>
-                <li class="border-b pb-2">Enunciado 3: <span class="font-bold">Lorem</span></li>
-                <!-- Add more dynamically -->
-            </ul>
+        <aside class="score-sidebar">
+            <h2>Puntuación</h2>
+            <div class="game-info">
+                <p>Puntuación Actual: <strong>5/10</strong></p>
+            </div>
+            <ul id="questions" class="questions"></ul>
         </aside>
     </main>
+    <footer class="footer">
+        &copy; 2025 Gamificación. Todos los derechos reservados.
+    </footer>
     <script src="../static/js/copy_link.js"></script>
-</section>
-{% endblock %}
+    <script src="../static/js/sopa_letras.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
