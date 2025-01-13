@@ -5,6 +5,7 @@ from google.cloud import firestore
 from pydantic import BaseModel
 from datetime import datetime
 from typing import Dict
+from fastapi.middleware.cors import CORSMiddleware
 
 
 app = FastAPI(
@@ -19,6 +20,14 @@ credentials_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 
 if not credentials_path:
     raise ValueError("La variable GOOGLE_APPLICATION_CREDENTIALS no está configurada en el archivo .env")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 db = firestore.Client.from_service_account_json(credentials_path)
 #collections = list(db.collections())

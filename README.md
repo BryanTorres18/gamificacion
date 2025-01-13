@@ -1,16 +1,12 @@
 # 📚 Gamificación
-Este proyecto implementa una plataforma de gamificación para reforzar el aprendizaje mediante juegos interactivos como crucigramas, sopas de letras y quizzes. Está dividido en dos partes principales: un frontend basado en Django y un backend basado en FastAPI, con Firebase como base de datos.
+Este proyecto implementa una plataforma de gamificación para reforzar el aprendizaje mediante juegos interactivos como crucigramas, sopas de letras y quizzes. Está dividido en dos partes principales: un frontend basado en Next.js y un backend basado en FastAPI, con Firebase como base de datos.
 
 # 🌟 Estructura del Proyecto
 
+```bash
 gamificacion/                                                     
 ├── backend/               # Backend implementado con FastAPI     
-│   ├── app/               # Código principal del backend         
-│   │   ├── main.py        # Punto de entrada para FastAPI        
-│   │   ├── models/        # Modelos de datos (Pydantic)          
-│   │   ├── routes/        # Endpoints de la API                  
-│   │   ├── services/      # Lógica de negocio                    
-│   │   └── utils/         # Funciones auxiliares                 
+│   ├── main.py            # Código principal del backend                      
 │   ├── env/               # Entorno virtual para el backend      
 │   ├── requirements.txt   # Dependencias del backend             
 │   └── tests/             # Pruebas unitarias del backend        
@@ -28,18 +24,17 @@ gamificacion/
 ├── firebase/              # Configuración de Firebase            
 │   ├── rules/             # Reglas de seguridad para Firestore   
 │   └── config.json        # Archivo de configuración de Firebase 
-└── README.md              # Documentación del proyecto          
+└── README.md              # Documentación del proyecto
+```
 
 ## **Instalación del Frontend**
 
 ### **Requisitos Previos**
 Antes de comenzar, asegúrate de tener instalado:
 
-- **Python 3.10** o superior
 - Una cuenta de Google Cloud configurada con Firestore habilitado
 - Un archivo de credenciales JSON descargado desde Google Cloud
-- pip para la gestión de paquetes
-- **Node.js y npm** (necesarios para Tailwind CSS)
+- **Node.js y npm**
 
 ---
 
@@ -52,68 +47,30 @@ Antes de comenzar, asegúrate de tener instalado:
    git clone https://github.com/tu-usuario/tu-repositorio.git
    cd tu-repositorio/frontend
 
-2. **Crear y Activar un Entorno Virtual**
+2. **Instalar Dependencias**
 
-   - **Para Windows**:
-     ```bash
-     python -m venv env
-     env\Scripts\activate
-     ```
-   - **Para Mac/Linux**:
-     ```bash
-     python3 -m venv env
-     source env/bin/activate
-     ```
-
-3. **Instalar Django**
-
-   Con el entorno virtual activado, instala Django:
    ```bash
-   pip install django
-   
-### **Configuración de Tailwind CSS**
+   npm install
 
-1. **Inicializar npm**
+3. **Ejecutar el Proyecto**
 
-   En la carpeta principal del frontend, inicializa un proyecto npm:
    ```bash
-   npm init -y
+   npm run dev
 
-2. **Instalar Tailwind CSS y Dependencias**
+4. **Acceder a la Aplicación Abre tu navegador y visita:** http://localhost:3000
 
-    Instala Tailwind CSS junto con sus dependencias PostCSS y Autoprefixer:
-    ```bash
-    npm install -D tailwindcss postcss autoprefixer
-   
-3. **Crear el Archivo de Configuración de Tailwind**
+### **Descripción de la Funcionalidad**
 
-    Genera el archivo tailwind.config.js con el siguiente comando:
-    ```bash
-    npx tailwindcss init
-   
-4. **Configurar el Archivo `tailwind.config.js`**
+El frontend de **Next.js** utiliza un enfoque modular para organizar componentes y páginas. Aquí hay un resumen de las carpetas más importantes:
 
-   Edita el archivo generado `tailwind.config.js` y ajusta las rutas para que Tailwind pueda procesar tus plantillas HTML:
+- **`src/app`**: Contiene las rutas del proyecto. Por ejemplo:
+   - **`create/`**: Página para crear juegos.
+   - **`games/`**: Página para listar juegos y sus detalles.
+   - **`sopa_letras/`**: Página específica para la sopa de letras.
 
-   ```javascript
-   module.exports = {
-       content: [
-           './src/templates/**/*.html',  // Rutas de las plantillas HTML
-       ],
-       theme: {
-           extend: {},  // Configuración adicional opcional
-       },
-       plugins: [],  // Puedes agregar plugins si es necesario
-   };
+- **`src/components`**: Componentes reutilizables como botones, formularios y layouts.
 
-5. **Crear el Archivo CSS Principal**
-
-   Crea un archivo llamado `style.css` dentro de la carpeta `static/css` y agrega las directivas principales de Tailwind CSS:
-
-   ```css
-   @tailwind base;
-   @tailwind components;
-   @tailwind utilities;
+- **`src/styles`**: Archivos CSS que utilizan módulos para estilos específicos.
 
 ## **Pasos para configurar el Backend**
 
