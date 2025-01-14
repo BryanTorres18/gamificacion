@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import SopaLetrasBoard from "@/components/games/sopaDeLetras/sopaDeLetrasBoard";
 import QuestionList from "@/components/games/questionsList";
+import HeaderGames from "@/components/games/headerGames";
 
 export default function GamePage({ params }) {
     const [id, setId] = useState(null); // Estado para almacenar el ID
@@ -48,28 +49,29 @@ export default function GamePage({ params }) {
     }
 
     return (
-        <div>
-            <h1>{game.title}</h1>
-            {game.game_type === "Sopa de Letras" && (
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <SopaLetrasBoard
-                        questions={Object.entries(game.data).map(([question, answer]) => ({
-                            question,
-                            answer,
-                        }))}
-                        onWordFound={handleWordFound}
-                    />
-                    <QuestionList
-                        questions={Object.entries(game.data).map(([question, answer]) => ({
-                            question,
-                            answer,
-                        }))}
-                        foundWords={foundWords}
-                    />
-                </div>
-            )}
-            {/* Agregar lógica condicional para otros tipos de juegos */}
-        </div>
+        <section className="flex flex-col min-h-screen relative">
+            <HeaderGames id={id} gameType={game.game_type}/>
+            <div className="flex-grow pt-20 px-4">
+                {game.game_type === "Sopa de Letras" && (
+                    <div className="flex justify-between flex-grow px-4 py-8 bg-blue-100">
+                        <SopaLetrasBoard
+                            questions={Object.entries(game.data).map(([question, answer]) => ({
+                                question,
+                                answer,
+                            }))}
+                            onWordFound={handleWordFound}
+                        />
+                        <QuestionList
+                            questions={Object.entries(game.data).map(([question, answer]) => ({
+                                question,
+                                answer,
+                            }))}
+                            foundWords={foundWords}
+                        />
+                    </div>
+                )}
+            </div>
+        </section>
     );
 }
 
