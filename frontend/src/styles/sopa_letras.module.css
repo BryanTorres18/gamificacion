@@ -71,23 +71,29 @@
     justify-content: center;
     align-items: center;
     margin-top: 1rem;
+    width: 100%; /* Se ajusta al ancho disponible */
+    max-width: 90vmin; /* Limita el ancho máximo al 90% del viewport */
 }
 
 .board {
+    background-color: #1e3a8a;
+    padding: 2rem;
+    border-radius: 15px;
     display: grid;
-    grid-template-columns: repeat(10, 30px);
-    grid-template-rows: repeat(10, 30px);
     gap: 5px;
-    background-color: white;
+    width: 100%;
+    height: auto;
 }
 
 .cell {
+    width: 100%;
+    aspect-ratio: 1; /* Mantiene las celdas cuadradas */
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: white;
     border: 1px solid #ddd;
-    font-size: 14px;
+    font-size: calc(10px + 0.4vw); /* Ajusta el tamaño del texto dinámicamente */
     cursor: pointer;
     user-select: none;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -103,6 +109,7 @@
     color: black;
     pointer-events: none;
 }
+
 
 .questions li {
     list-style: none;

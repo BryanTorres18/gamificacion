@@ -1,9 +1,7 @@
-"use client";
-
-import React, { useState, useEffect } from "react";
+import {useEffect, useState} from "react";
 import styles from "@/styles/sopa_letras.module.css";
 
-export default function SopaLetrasBoard({ questions, onWordFound }) {
+export default function SopaLetrasBoard({ size = 10, questions, onWordFound }) {
     const [board, setBoard] = useState([]);
     const [selectedCells, setSelectedCells] = useState([]);
     const [foundCells, setFoundCells] = useState([]);
@@ -11,7 +9,6 @@ export default function SopaLetrasBoard({ questions, onWordFound }) {
     // Inicialización del tablero
     useEffect(() => {
         const generateBoard = () => {
-            const size = 10;
             const board = Array(size)
                 .fill(null)
                 .map(() => Array(size).fill(""));
@@ -69,7 +66,7 @@ export default function SopaLetrasBoard({ questions, onWordFound }) {
         };
 
         setBoard(generateBoard());
-    }, []); // Solo se genera una vez, al montar el componente
+    }, [size, questions]); // Regenera el tablero si cambia el tamaño o las preguntas
 
     const handleCellClick = (row, col) => {
         const cellExists = selectedCells.some(
@@ -102,30 +99,33 @@ export default function SopaLetrasBoard({ questions, onWordFound }) {
     };
 
     return (
-        <div className={styles.board}>
-            {board.map((row, rowIndex) =>
-                row.map((cell, colIndex) => {
-                    const isSelected = selectedCells.some(
-                        (selected) => selected.row === rowIndex && selected.col === colIndex
-                    );
-                    const isFound = foundCells.some(
-                        (found) => found.row === rowIndex && found.col === colIndex
-                    );
+        <div className={styles.boardContainer}>
+            <div className={styles.board} style={{gridTemplateColumns: `repeat(${size}, 1fr)`}}>
+                {board.map((row, rowIndex) =>
+                    row.map((cell, colIndex) => {
+                        const isSelected = selectedCells.some(
+                            (selected) => selected.row === rowIndex && selected.col === colIndex
+                        );
+                        const isFound = foundCells.some(
+                            (found) => found.row === rowIndex && found.col === colIndex
+                        );
 
-                    return (
-                        <div
-                            key={`${rowIndex}-${colIndex}`}
-                            className={`${styles.cell} ${isSelected ? styles.selected : ""} ${
-                                isFound ? styles.found : ""
-                            }`}
-                            onClick={() => handleCellClick(rowIndex, colIndex)}
-                        >
-                            {cell}
-                        </div>
-                    );
-                })
-            )}
+                        return (
+                            <div
+                                key={`${rowIndex}-${colIndex}`}
+                                className={`${styles.cell} ${isSelected ? styles.selected : ""} ${
+                                    isFound ? styles.found : ""
+                                }`}
+                                onClick={() => handleCellClick(rowIndex, colIndex)}
+                            >
+                                {cell}
+                            </div>
+                        );
+                    })
+                )}
+            </div>
         </div>
     );
 }
+
 

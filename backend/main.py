@@ -37,6 +37,7 @@ db = firestore.Client.from_service_account_json(credentials_path)
 class Game(BaseModel):
     game_type: str
     title: str
+    size: int
     created_at: datetime
     data: Dict[str, str]
 
@@ -54,6 +55,7 @@ async def create_game(game: Game):
     Crea un nuevo registro en la colección de juegos.
 
     - **title**: El título del juego (por ejemplo, "Crucigrama Avanzado").
+    - **size**: El tamaño del  (por ejemplo, 10, 15, 20).
     - **game_type**: El tipo de juego (por ejemplo, "crucigrama").
     - **created_at**: La fecha de creación del juego.
     - **data**: Un diccionario con datos adicionales sobre el juego (como dificultad o pistas).

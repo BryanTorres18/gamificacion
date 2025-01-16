@@ -3,13 +3,14 @@
 import { useState, useEffect } from "react";
 import DynamicFields from "@/components/createComponents/dynamicFields";
 import SizeField from "@/components/createComponents/sizeField";
-import { useSearchParams } from "next/navigation"; // Ya no necesitamos useRouter
+import { useSearchParams } from "next/navigation";
 
 export default function CreateGamePage({}) {
     const searchParams = useSearchParams();
     const gameType = searchParams.get("game_type") || "Desconocido";
     const [fields, setFields] = useState([{ enunciado: "", respuesta: "" }]);
     const [showSizeField, setShowSizeField] = useState(false);
+    const [size, setSize] = useState("");
 
     useEffect(() => {
         if (gameType === "Sopa de Letras") {
@@ -20,9 +21,16 @@ export default function CreateGamePage({}) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Verifica si el tamaño ha sido seleccionado
+        if (showSizeField && !size) {
+            alert("Por favor, selecciona un tamaño para el tablero.");
+            return;
+        }
+
         const payload = {
             game_type: gameType,
             title: gameType,
+            size: parseInt(size, 10), // Envía el tamaño como un número
             created_at: new Date().toISOString(),
             data: fields.reduce((acc, field) => {
                 acc[field.enunciado] = field.respuesta;
@@ -57,15 +65,16 @@ export default function CreateGamePage({}) {
         }
     };
 
+
     return (
         <section>
             <h1 className="text-5xl font-bold mb-4">{gameType}</h1>
             <h2 className="text-2xl font-bold mb-4">Ingrese los enunciados con su respuesta:</h2>
             <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Componentes de campos dinámicos */}
+                {/* Campos dinámicos */}
                 <DynamicFields fields={fields} setFields={setFields} />
-                {/* Componentes adicionales para "Sopa de Letras" */}
-                {showSizeField && <SizeField />}
+                {/* Campo para seleccionar el tamaño del tablero */}
+                {showSizeField && <SizeField size={size} setSize={setSize} />}
                 <button type="submit" className="bg-green-500 text-white px-6 py-2 rounded-md mt-4">
                     Crear Juego
                 </button>

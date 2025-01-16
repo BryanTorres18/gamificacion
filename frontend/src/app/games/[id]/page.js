@@ -50,22 +50,26 @@ export default function GamePage({ params }) {
 
     return (
         <section className="flex flex-col min-h-screen relative">
-            <HeaderGames id={id} gameType={game.game_type}/>
+            <HeaderGames id={id} gameType={game.game_type} />
             <div className="flex-grow pt-20 px-4">
                 {game.game_type === "Sopa de Letras" && (
                     <div className="flex justify-between flex-grow px-4 py-8 bg-blue-100">
                         <SopaLetrasBoard
+                            size={game.size} // Usa el campo size directamente del backend
                             questions={Object.entries(game.data).map(([question, answer]) => ({
                                 question,
                                 answer,
                             }))}
                             onWordFound={handleWordFound}
                         />
+
                         <QuestionList
-                            questions={Object.entries(game.data).map(([question, answer]) => ({
-                                question,
-                                answer,
-                            }))}
+                            questions={Object.entries(game.data)
+                                .filter(([key]) => key !== "size") // Filtra "size"
+                                .map(([question, answer]) => ({
+                                    question,
+                                    answer,
+                                }))}
                             foundWords={foundWords}
                         />
                     </div>
