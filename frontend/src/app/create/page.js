@@ -30,7 +30,7 @@ export default function CreateGamePage({}) {
         const payload = {
             game_type: gameType,
             title: gameType,
-            size: parseInt(size, 10), // Envía el tamaño como un número
+            size: parseInt(size, 10) || 10, // Envía el tamaño como un número
             created_at: new Date().toISOString(),
             data: fields.reduce((acc, field) => {
                 acc[field.enunciado] = field.respuesta;

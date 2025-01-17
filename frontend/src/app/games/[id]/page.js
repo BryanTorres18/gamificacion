@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import SopaLetrasBoard from "@/components/games/sopaDeLetras/sopaDeLetrasBoard";
 import QuestionList from "@/components/games/questionsList";
 import HeaderGames from "@/components/games/headerGames";
+import CrucigramaBoard from "@/components/games/crucigrama/crucigramaBoard";
 
 export default function GamePage({ params }) {
     const [id, setId] = useState(null); // Estado para almacenar el ID
@@ -71,6 +72,20 @@ export default function GamePage({ params }) {
                                     answer,
                                 }))}
                             foundWords={foundWords}
+                        />
+                    </div>
+                )}
+
+                {game.game_type === "Crucigrama" && (
+                    <div className="flex justify-between flex-grow px-4 py-8 bg-green-100">
+                        <CrucigramaBoard
+                            gameData={{
+                                questions: Object.entries(game.data).map(([question, answer]) => ({
+                                    question,
+                                    answer,
+                                })),
+                                gridSize: game.size,
+                            }}
                         />
                     </div>
                 )}
