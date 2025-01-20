@@ -21,6 +21,14 @@ export default function CreateGamePage({}) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        const emptyFields = fields.some(
+            (field) => !field.enunciado.trim() || !field.respuesta.trim()
+        );
+        if (emptyFields) {
+            alert("Por favor, completa todos los campos antes de enviar.");
+            return;
+        }
+
         // Verifica si el tamaño ha sido seleccionado
         if (showSizeField && !size) {
             alert("Por favor, selecciona un tamaño para el tablero.");

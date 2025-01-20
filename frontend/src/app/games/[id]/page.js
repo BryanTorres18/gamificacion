@@ -5,6 +5,7 @@ import SopaLetrasBoard from "@/components/games/sopaDeLetras/sopaDeLetrasBoard";
 import QuestionList from "@/components/games/questionsList";
 import HeaderGames from "@/components/games/headerGames";
 import CrucigramaBoard from "@/components/games/crucigrama/crucigramaBoard";
+import LoadingScreen from "@/components/games/loadingScreen";
 
 export default function GamePage({ params }) {
     const [id, setId] = useState(null); // Estado para almacenar el ID
@@ -46,7 +47,7 @@ export default function GamePage({ params }) {
     };
 
     if (!game) {
-        return <div>Cargando juego...</div>;
+        return <LoadingScreen/>;
     }
 
     return (

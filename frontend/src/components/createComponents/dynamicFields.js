@@ -1,7 +1,21 @@
 export default function DynamicFields({ fields, setFields }) {
     const handleFieldChange = (index, key, value) => {
         const updatedFields = [...fields];
-        updatedFields[index][key] = value;
+
+        if (key === "respuesta") {
+            // Aplicar restricciones solo para el campo "respuesta"
+            const formattedValue = value
+                .toUpperCase() // Convertir a mayúsculas
+                .replace(/[^A-Z]/g, ""); // Eliminar caracteres no alfabéticos
+
+            if (formattedValue.length <= 10) {
+                updatedFields[index][key] = formattedValue;
+            }
+        } else {
+            // Permitir cualquier valor para el campo "enunciado"
+            updatedFields[index][key] = value;
+        }
+
         setFields(updatedFields);
     };
 
@@ -46,3 +60,4 @@ export default function DynamicFields({ fields, setFields }) {
         </div>
     );
 }
+
