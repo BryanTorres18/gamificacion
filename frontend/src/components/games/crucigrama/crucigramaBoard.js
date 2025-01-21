@@ -8,6 +8,32 @@ const CrucigramaBoard = ({ gameData }) => {
     const [wordPositions] = useState(new Map());
     const [wordRegistry] = useState(new Map());
     const [completedWords, setCompletedWords] = useState(new Set());
+    const [questionNumbers, setQuestionNumbers] = useState(new Map());
+
+    const assignQuestionNumbers = (currentGrid, positions) => {
+        const numbers = new Map();
+        let currentNumber = 1;
+
+        // Ordenar las posiciones por fila y columna
+        const sortedPositions = Array.from(positions.entries()).sort((a, b) => {
+            const posA = a[1];
+            const posB = b[1];
+            if (posA.startRow === posB.startRow) {
+                return posA.startCol - posB.startCol;
+            }
+            return posA.startRow - posB.startRow;
+        });
+
+        // Asignar números
+        sortedPositions.forEach(([question]) => {
+            if (!numbers.has(question)) {
+                numbers.set(question, currentNumber++);
+            }
+        });
+
+        setQuestionNumbers(numbers);
+        return numbers;
+    };
 
     const findRandomPosition = (word, currentGrid) => {
         const intersectionPositions = [];
@@ -199,7 +225,6 @@ const CrucigramaBoard = ({ gameData }) => {
             Array(gridSize).fill(null)
         );
 
-        // Ordenar palabras por longitud (más largas primero)
         const sortedQuestions = [...questionsData].sort((a, b) =>
             b.answer.length - a.answer.length
         );
@@ -235,13 +260,28 @@ const CrucigramaBoard = ({ gameData }) => {
             }
         }
 
+        // Asignar números después de colocar todas las palabras
+        assignQuestionNumbers(currentGrid, wordPositions);
+
         setGrid(currentGrid);
         setQuestions(sortedQuestions);
+    };
+
+    const isCellFromCompletedWord = (rowIndex, colIndex, currentGrid) => {
+        const cell = currentGrid[rowIndex][colIndex];
+        if (!cell || !cell.question) return false;
+        const questions = cell.question.split(',');
+        return questions.every(q => completedWords.has(q));
     };
 
     const handleCellChange = (rowIndex, colIndex, value) => {
         const newGrid = JSON.parse(JSON.stringify(grid));
         if (!newGrid[rowIndex][colIndex]) return;
+
+        // Verificar si la celda pertenece a una palabra completada
+        if (isCellFromCompletedWord(rowIndex, colIndex, newGrid)) {
+            return; // No permitir cambios en celdas de palabras completadas
+        }
 
         newGrid[rowIndex][colIndex] = {
             ...newGrid[rowIndex][colIndex],
@@ -253,7 +293,7 @@ const CrucigramaBoard = ({ gameData }) => {
     };
 
     const checkWordCompletion = (currentGrid) => {
-        const newCompletedWords = new Set();
+        const newCompletedWords = new Set(completedWords);
 
         questions.forEach(({ question, answer }) => {
             const cells = wordRegistry.get(question);
@@ -265,6 +305,8 @@ const CrucigramaBoard = ({ gameData }) => {
 
             if (currentWord === answer.toUpperCase()) {
                 newCompletedWords.add(question);
+            } else {
+                newCompletedWords.delete(question);
             }
         });
 
@@ -273,6 +315,20 @@ const CrucigramaBoard = ({ gameData }) => {
         if (newCompletedWords.size === questions.length) {
             console.log("¡Crucigrama completado!");
         }
+    };
+
+    const isStartOfWord = (rowIndex, colIndex, currentGrid) => {
+        const cell = currentGrid[rowIndex][colIndex];
+        if (!cell || !cell.question) return null;
+
+        const questions = cell.question.split(',');
+        for (const question of questions) {
+            const position = wordPositions.get(question);
+            if (position && position.startRow === rowIndex && position.startCol === colIndex) {
+                return questionNumbers.get(question);
+            }
+        }
+        return null;
     };
 
     useEffect(() => {
@@ -285,45 +341,112 @@ const CrucigramaBoard = ({ gameData }) => {
         <div className="w-full max-w-6xl mx-auto">
             <div className="flex flex-row justify-between w-full gap-4">
                 <div className="flex-3 bg-gray-300 p-5">
-                    <div className="grid gap-0.5" style={{ gridTemplateColumns: `repeat(${gridSize}, 30px)` }}>
+                    <div
+                        className="grid gap-0"
+                        style={{
+                            gridTemplateColumns: `repeat(${gridSize}, ${cellSize}px)`,
+                            width: `${gridSize * cellSize}px`
+                        }}
+                    >
                         {grid.map((row, rowIndex) => (
                             row.map((cell, colIndex) => (
-                                <input
+                                <div
                                     key={`${rowIndex}-${colIndex}`}
-                                    type="text"
-                                    maxLength={1}
-                                    value={cell?.userValue || ''}
-                                    onChange={(e) => handleCellChange(rowIndex, colIndex, e.target.value)}
-                                    className={`
-                    w-[${cellSize}px] h-[${cellSize}px] text-center font-bold text-lg uppercase
-                    ${!cell ? 'bg-gray-100 border border-gray-300 cursor-not-allowed' : 'bg-green-100 border border-gray-300'}
-                    ${cell && cell.question?.split(',').some(q => completedWords.has(q)) ? 'bg-green-200 text-green-800' : ''}
-                  `}
-                                    disabled={!cell}
-                                />
+                                    className="relative"
+                                    style={{
+                                        width: cellSize,
+                                        height: cellSize,
+                                        border: cell ? '2px solid #1a365d' : '1px solid #e2e8f0'
+                                    }}
+                                >
+                                    {isStartOfWord(rowIndex, colIndex, grid) && (
+                                        <div
+                                            className="absolute left-1 top-0 text-xs z-10"
+                                            style={{
+                                                fontSize: '10px',
+                                                lineHeight: '12px',
+                                                fontWeight: 'bold'
+                                            }}
+                                        >
+                                            {isStartOfWord(rowIndex, colIndex, grid)}
+                                        </div>
+                                    )}
+                                    <input
+                                        type="text"
+                                        maxLength={1}
+                                        value={cell?.userValue || ''}
+                                        onChange={(e) => handleCellChange(rowIndex, colIndex, e.target.value)}
+                                        className={`
+                                            w-full 
+                                            h-full
+                                            text-center
+                                            font-bold
+                                            text-lg
+                                            uppercase
+                                            outline-none
+                                            ${!cell ? 'bg-gray-200 cursor-not-allowed' : 'bg-blue-50 hover:bg-blue-100'}
+                                            ${cell && cell.question?.split(',').some(q => completedWords.has(q))
+                                            ? 'bg-green-300 text-green-900 hover:bg-green-300'
+                                            : ''}
+                                            ${isCellFromCompletedWord(rowIndex, colIndex, grid)
+                                            ? 'cursor-not-allowed bg-green-300 text-green-900'
+                                            : ''}
+                                        `}
+                                        style={{
+                                            padding: '0',
+                                            margin: '0',
+                                            boxSizing: 'border-box'
+                                        }}
+                                        disabled={!cell || isCellFromCompletedWord(rowIndex, colIndex, grid)}
+                                    />
+                                </div>
                             ))
                         ))}
                     </div>
                 </div>
 
-                <div className="flex-1 bg-gray-100 p-5">
-                    <h2 className="text-lg mb-4">Preguntas</h2>
-                    <ul>
-                        {questions.map(({ question }, index) => {
-                            const position = wordPositions.get(question);
-                            const direction = position ? position.direction : "";
-                            const directionText = direction === "horizontal" ? "(Horizontal)" : "(Vertical)";
+                <div className="flex-1 bg-gray-100 p-5 min-w-[300px]">
+                    <div className="mb-6">
+                        <h2 className="text-lg font-bold mb-3">Horizontales</h2>
+                        <ul className="space-y-2">
+                            {questions
+                                .filter(({question}) => wordPositions.get(question)?.direction === "horizontal")
+                                .map(({question}) => {
+                                    const number = questionNumbers.get(question);
+                                    return (
+                                        <li
+                                            key={question}
+                                            className={`${completedWords.has(question)
+                                                ? 'line-through text-green-900 bg-green-300 p-1 rounded'
+                                                : ''}`}
+                                        >
+                                            {number}. {question}
+                                        </li>
+                                    );
+                                })}
+                        </ul>
+                    </div>
 
-                            return (
-                                <li
-                                    key={index}
-                                    className={`mb-2 ${completedWords.has(question) ? 'line-through text-green-800 bg-green-200 p-1 rounded' : ''}`}
-                                >
-                                    {index + 1}. {question} {directionText}
-                                </li>
-                            );
-                        })}
-                    </ul>
+                    <div>
+                        <h2 className="text-lg font-bold mb-3">Verticales</h2>
+                        <ul className="space-y-2">
+                            {questions
+                                .filter(({question}) => wordPositions.get(question)?.direction === "vertical")
+                                .map(({question}) => {
+                                    const number = questionNumbers.get(question);
+                                    return (
+                                        <li
+                                            key={question}
+                                            className={`${completedWords.has(question)
+                                                ? 'line-through text-green-900 bg-green-300 p-1 rounded'
+                                                : ''}`}
+                                        >
+                                            {number}. {question}
+                                        </li>
+                                    );
+                                })}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -331,12 +454,3 @@ const CrucigramaBoard = ({ gameData }) => {
 };
 
 export default CrucigramaBoard;
-
-
-
-
-
-
-
-
-
