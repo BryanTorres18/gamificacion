@@ -1,74 +1,85 @@
-import {useEffect, useState} from "react";
-import styles from "@/styles/sopa_letras.module.css";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 export default function SopaLetrasBoard({ size = 10, questions, onWordFound }) {
     const [board, setBoard] = useState([]);
     const [selectedCells, setSelectedCells] = useState([]);
     const [foundCells, setFoundCells] = useState([]);
+    const [initializedBoard, setInitializedBoard] = useState(false);
+    const [completionEffect, setCompletionEffect] = useState(false);
 
-    // Inicialización del tablero
+    // Board initialization logic permanece igual
     useEffect(() => {
-        const generateBoard = () => {
-            const board = Array(size)
-                .fill(null)
-                .map(() => Array(size).fill(""));
+        if (!initializedBoard) {
+            const generateBoard = () => {
+                const board = Array(size)
+                    .fill(null)
+                    .map(() => Array(size).fill(""));
 
-            const directions = [
-                [0, 1], // Horizontal derecha
-                [1, 0], // Vertical abajo
-                [1, 1], // Diagonal derecha abajo
-            ];
+                const directions = [
+                    [0, 1],
+                    [1, 0],
+                    [1, 1],
+                ];
 
-            const canPlaceWord = (word, row, col, direction) => {
-                const [dx, dy] = direction;
-                for (let i = 0; i < word.length; i++) {
-                    const x = row + i * dx;
-                    const y = col + i * dy;
-                    if (x >= size || y >= size || board[x][y] !== "") return false;
-                }
-                return true;
-            };
+                const canPlaceWord = (word, row, col, direction) => {
+                    const [dx, dy] = direction;
+                    for (let i = 0; i < word.length; i++) {
+                        const x = row + i * dx;
+                        const y = col + i * dy;
+                        if (x >= size || y >= size || board[x][y] !== "") return false;
+                    }
+                    return true;
+                };
 
-            const placeWord = (word, row, col, direction) => {
-                const [dx, dy] = direction;
-                for (let i = 0; i < word.length; i++) {
-                    const x = row + i * dx;
-                    const y = col + i * dy;
-                    board[x][y] = word[i];
-                }
-            };
+                const placeWord = (word, row, col, direction) => {
+                    const [dx, dy] = direction;
+                    for (let i = 0; i < word.length; i++) {
+                        const x = row + i * dx;
+                        const y = col + i * dy;
+                        board[x][y] = word[i];
+                    }
+                };
 
-            for (const q of questions) {
-                const word = q.answer;
-                let placed = false;
+                for (const q of questions) {
+                    const word = q.answer;
+                    let placed = false;
 
-                while (!placed) {
-                    const row = Math.floor(Math.random() * size);
-                    const col = Math.floor(Math.random() * size);
-                    const direction = directions[Math.floor(Math.random() * directions.length)];
+                    while (!placed) {
+                        const row = Math.floor(Math.random() * size);
+                        const col = Math.floor(Math.random() * size);
+                        const direction =
+                            directions[Math.floor(Math.random() * directions.length)];
 
-                    if (canPlaceWord(word, row, col, direction)) {
-                        placeWord(word, row, col, direction);
-                        placed = true;
+                        if (canPlaceWord(word, row, col, direction)) {
+                            placeWord(word, row, col, direction);
+                            placed = true;
+                        }
                     }
                 }
-            }
 
-            for (let i = 0; i < size; i++) {
-                for (let j = 0; j < size; j++) {
-                    if (board[i][j] === "") {
-                        board[i][j] = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+                for (let i = 0; i < size; i++) {
+                    for (let j = 0; j < size; j++) {
+                        if (board[i][j] === "") {
+                            board[i][j] =
+                                String.fromCharCode(65 + Math.floor(Math.random() * 26));
+                        }
                     }
                 }
-            }
 
-            return board;
-        };
+                return board;
+            };
 
-        setBoard(generateBoard());
-    }, [size, questions]); // Regenera el tablero si cambia el tamaño o las preguntas
+            setBoard(generateBoard());
+            setInitializedBoard(true);
+        }
+    }, [size, initializedBoard]);
 
     const handleCellClick = (row, col) => {
+        if (foundCells.some(cell => cell.row === row && cell.col === col)) {
+            return;
+        }
+
         const cellExists = selectedCells.some(
             (cell) => cell.row === row && cell.col === col
         );
@@ -82,50 +93,76 @@ export default function SopaLetrasBoard({ size = 10, questions, onWordFound }) {
             setSelectedCells(updatedCells);
 
             const selectedWord = updatedCells
-                .sort((a, b) => (a.row - b.row) || (a.col - b.col))
+                .sort((a, b) => a.row - b.row || a.col - b.col)
                 .map((cell) => board[cell.row][cell.col])
                 .join("");
 
-            const foundQuestion = questions.find(
-                (q) => q.answer === selectedWord
-            );
+            const foundQuestion = questions.find((q) => q.answer === selectedWord);
 
             if (foundQuestion) {
                 setFoundCells((prev) => [...prev, ...updatedCells]);
                 onWordFound(foundQuestion.answer);
                 setSelectedCells([]);
+
+                // Trigger completion effect
+                setCompletionEffect(true);
+                setTimeout(() => setCompletionEffect(false), 1000);
             }
         }
     };
 
     return (
-        <div className={styles.boardContainer}>
-            <div className={styles.board} style={{gridTemplateColumns: `repeat(${size}, 1fr)`}}>
-                {board.map((row, rowIndex) =>
-                    row.map((cell, colIndex) => {
-                        const isSelected = selectedCells.some(
-                            (selected) => selected.row === rowIndex && selected.col === colIndex
-                        );
-                        const isFound = foundCells.some(
-                            (found) => found.row === rowIndex && found.col === colIndex
-                        );
+        <div className="relative w-full max-w-3xl mx-auto">
+            <div className="aspect-square w-full">
+                <div className="bg-gray-100 p-4 rounded-lg relative">
+                    <motion.div
+                        className="bg-blue-900 p-4 sm:p-6 md:p-8 rounded-2xl grid gap-1"
+                        style={{
+                            gridTemplateColumns: `repeat(${size}, 1fr)`
+                        }}
+                        animate={completionEffect ? { scale: [1, 1.02, 1] } : {}}
+                        transition={{ duration: 0.5 }}
+                    >
+                        {board.map((row, rowIndex) =>
+                            row.map((cell, colIndex) => {
+                                const isSelected = selectedCells.some(
+                                    s => s.row === rowIndex && s.col === colIndex
+                                );
+                                const isFound = foundCells.some(
+                                    f => f.row === rowIndex && f.col === colIndex
+                                );
 
-                        return (
-                            <div
-                                key={`${rowIndex}-${colIndex}`}
-                                className={`${styles.cell} ${isSelected ? styles.selected : ""} ${
-                                    isFound ? styles.found : ""
-                                }`}
-                                onClick={() => handleCellClick(rowIndex, colIndex)}
-                            >
-                                {cell}
-                            </div>
-                        );
-                    })
-                )}
+                                return (
+                                    <motion.div
+                                        key={`${rowIndex}-${colIndex}`}
+                                        className={`
+                                            aspect-square flex items-center justify-center
+                                            text-sm sm:text-base font-medium rounded
+                                            cursor-pointer select-none
+                                            ${isFound
+                                            ? 'bg-green-400 text-white shadow-md'
+                                            : isSelected
+                                                ? 'bg-yellow-300 shadow-md transform -translate-y-0.5'
+                                                : 'bg-white hover:bg-gray-50'}
+                                        `}
+                                        whileHover={!isFound ? { scale: 1.05 } : {}}
+                                        whileTap={!isFound ? { scale: 0.95 } : {}}
+                                        onClick={() => handleCellClick(rowIndex, colIndex)}
+                                        initial={isFound ? { scale: 1 } : { scale: 0.8 }}
+                                        animate={isFound ? { scale: [1.2, 1] } : { scale: 1 }}
+                                        transition={{ duration: 0.2 }}
+                                    >
+                                        {cell}
+                                    </motion.div>
+                                );
+                            })
+                        )}
+                    </motion.div>
+                </div>
             </div>
         </div>
     );
+
 }
 
 

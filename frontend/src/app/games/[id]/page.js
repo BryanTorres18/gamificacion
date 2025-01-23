@@ -51,47 +51,64 @@ export default function GamePage({ params }) {
     }
 
     return (
-        <section className="flex flex-col min-h-screen relative">
+        <div className="min-h-screen bg-gray-50 mt-20">
             <HeaderGames id={id} gameType={game.game_type} />
-            <div className="flex-grow pt-20 px-4">
-                {game.game_type === "Sopa de Letras" && (
-                    <div className="flex justify-between flex-grow px-4 py-8 bg-blue-100">
-                        <SopaLetrasBoard
-                            size={game.size} // Usa el campo size directamente del backend
-                            questions={Object.entries(game.data).map(([question, answer]) => ({
-                                question,
-                                answer,
-                            }))}
-                            onWordFound={handleWordFound}
-                        />
+            <section className="flex flex-col min-h-screen relative">
+                <div className="flex flex-col lg:flex-row gap-8">
+                    {game.game_type === "Sopa de Letras" && (
+                        <div className="flex flex-col lg:flex-row justify-between flex-grow px-4 py-8 bg-blue-100">
+                            {/* Tablero */}
+                            <div className="flex-grow lg:w-2/3">
+                                <div className="bg-white rounded-xl shadow-lg p-6">
+                                    <SopaLetrasBoard
+                                        size={game.size} // Usa el campo size directamente del backend
+                                        questions={Object.entries(game.data).map(([question, answer]) => ({
+                                            question,
+                                            answer,
+                                        }))}
+                                        onWordFound={handleWordFound}
+                                    />
+                                </div>
+                            </div>
 
-                        <QuestionList
-                            questions={Object.entries(game.data)
-                                .filter(([key]) => key !== "size") // Filtra "size"
-                                .map(([question, answer]) => ({
-                                    question,
-                                    answer,
-                                }))}
-                            foundWords={foundWords}
-                        />
-                    </div>
-                )}
+                            {/* Lista de preguntas */}
+                            <div className="lg:w-1/3 lg:sticky lg:top-4 order-1 lg:order-none mt-8 lg:mt-0">
+                                <div className="bg-white rounded-xl shadow-lg p-6">
+                                    <div className="mb-4">
+                                        <div className="bg-blue-100 text-blue-800 text-center py-2 px-4 rounded-lg font-medium">
+                                            Palabras
+                                        </div>
+                                    </div>
+                                    <QuestionList
+                                        questions={Object.entries(game.data)
+                                            .filter(([key]) => key !== "size") // Filtra "size"
+                                            .map(([question, answer]) => ({
+                                                question,
+                                                answer,
+                                            }))}
+                                        foundWords={foundWords}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    )}
 
-                {game.game_type === "Crucigrama" && (
-                    <div className="flex justify-between flex-grow px-4 py-8 bg-green-100">
-                        <CrucigramaBoard
-                            gameData={{
-                                questions: Object.entries(game.data).map(([question, answer]) => ({
-                                    question,
-                                    answer,
-                                })),
-                                gridSize: game.size,
-                            }}
-                        />
-                    </div>
-                )}
-            </div>
-        </section>
+                    {game.game_type === "Crucigrama" && (
+                        <div className="flex justify-between flex-grow px-4 py-8 bg-green-100">
+                            <CrucigramaBoard
+                                gameData={{
+                                    questions: Object.entries(game.data).map(([question, answer]) => ({
+                                        question,
+                                        answer,
+                                    })),
+                                    gridSize: game.size,
+                                }}
+                            />
+                        </div>
+                    )}
+                </div>
+            </section>
+        </div>
     );
 }
 
