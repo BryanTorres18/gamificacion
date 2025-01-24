@@ -113,12 +113,14 @@ export default function SopaLetrasBoard({ size = 10, questions, onWordFound }) {
 
     return (
         <div className="relative w-full max-w-3xl mx-auto">
+            {/* Contenedor responsivo */}
             <div className="aspect-square w-full">
-                <div className="bg-gray-100 p-4 rounded-lg relative">
+                <div className="bg-gray-100 p-4 rounded-lg relative overflow-auto">
+                    {/* Tablero */}
                     <motion.div
                         className="bg-blue-900 p-4 sm:p-6 md:p-8 rounded-2xl grid gap-1"
                         style={{
-                            gridTemplateColumns: `repeat(${size}, 1fr)`
+                            gridTemplateColumns: `repeat(${size}, minmax(20px, 1fr))`, // Ajusta las columnas dinámicamente
                         }}
                         animate={completionEffect ? { scale: [1, 1.02, 1] } : {}}
                         transition={{ duration: 0.5 }}
@@ -135,16 +137,14 @@ export default function SopaLetrasBoard({ size = 10, questions, onWordFound }) {
                                 return (
                                     <motion.div
                                         key={`${rowIndex}-${colIndex}`}
-                                        className={`
-                                            aspect-square flex items-center justify-center
-                                            text-sm sm:text-base font-medium rounded
-                                            cursor-pointer select-none
-                                            ${isFound
+                                        className={`aspect-square flex items-center justify-center
+                                        text-sm sm:text-base font-medium rounded cursor-pointer select-none
+                                        ${isFound
                                             ? 'bg-green-400 text-white shadow-md'
                                             : isSelected
                                                 ? 'bg-yellow-300 shadow-md transform -translate-y-0.5'
                                                 : 'bg-white hover:bg-gray-50'}
-                                        `}
+                                    `}
                                         whileHover={!isFound ? { scale: 1.05 } : {}}
                                         whileTap={!isFound ? { scale: 0.95 } : {}}
                                         onClick={() => handleCellClick(rowIndex, colIndex)}
@@ -162,6 +162,7 @@ export default function SopaLetrasBoard({ size = 10, questions, onWordFound }) {
             </div>
         </div>
     );
+
 
 }
 

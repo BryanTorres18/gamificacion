@@ -8,7 +8,7 @@ import CrucigramaBoard from "@/components/games/crucigrama/crucigramaBoard";
 import LoadingScreen from "@/components/games/loadingScreen";
 
 export default function GamePage({ params }) {
-    const [id, setId] = useState(null); // Estado para almacenar el ID
+    const [id, setId] = useState(null);
     const [game, setGame] = useState(null);
     const [foundWords, setFoundWords] = useState([]);
 
@@ -51,17 +51,17 @@ export default function GamePage({ params }) {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 mt-20">
+        <div className="min-h-screen">
             <HeaderGames id={id} gameType={game.game_type} />
-            <section className="flex flex-col min-h-screen relative">
+            <section className="flex flex-col min-h-screen relative mt-[80px] sm:mt-[100px]">
                 <div className="flex flex-col lg:flex-row gap-8">
                     {game.game_type === "Sopa de Letras" && (
                         <div className="flex flex-col lg:flex-row justify-between flex-grow px-4 py-8 bg-blue-100">
                             {/* Tablero */}
                             <div className="flex-grow lg:w-2/3">
-                                <div className="bg-white rounded-xl shadow-lg p-6">
+                                <div className="bg-white rounded-xl shadow-lg p-6 overflow-hidden">
                                     <SopaLetrasBoard
-                                        size={game.size} // Usa el campo size directamente del backend
+                                        size={game.size}
                                         questions={Object.entries(game.data).map(([question, answer]) => ({
                                             question,
                                             answer,
@@ -75,7 +75,8 @@ export default function GamePage({ params }) {
                             <div className="lg:w-1/3 lg:sticky lg:top-4 order-1 lg:order-none mt-8 lg:mt-0">
                                 <div className="bg-white rounded-xl shadow-lg p-6">
                                     <div className="mb-4">
-                                        <div className="bg-blue-100 text-blue-800 text-center py-2 px-4 rounded-lg font-medium">
+                                        <div
+                                            className="bg-blue-100 text-blue-800 text-center py-2 px-4 rounded-lg font-medium">
                                             Palabras
                                         </div>
                                     </div>
