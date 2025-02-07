@@ -53,7 +53,7 @@ export default function GamePage({ params }) {
     return (
         <div className="min-h-screen flex flex-col">
             <HeaderGames id={id} gameType={game.game_type} />
-            <section className="flex flex-grow flex-col mt-[80px] sm:mt-[100px] px-4">
+            <section className="flex flex-grow flex-col mt-10 px-4">
                 <div className="flex flex-col lg:flex-row gap-8 flex-grow">
                     {game.game_type === "Sopa de Letras" && (
                         <div className="flex flex-col lg:flex-row justify-between flex-grow bg-blue-100 rounded-lg p-4">
@@ -114,8 +114,5 @@ export default function GamePage({ params }) {
             </section>
         </div>
     );
-
-
-
 }
 

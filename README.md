@@ -4,26 +4,51 @@ Este proyecto implementa una plataforma de gamificación para reforzar el aprend
 # 🌟 Estructura del Proyecto
 
 ```bash
-gamificacion/                                                     
-├── backend/               # Backend implementado con FastAPI     
-│   ├── main.py            # Código principal del backend                      
-│   ├── env/               # Entorno virtual para el backend      
-│   ├── requirements.txt   # Dependencias del backend             
-│   └── tests/             # Pruebas unitarias del backend        
-├── frontend/              # Frontend implementado con Django     
-│   ├── src/               # Código principal del frontend        
-│   │   ├── settings.py    # Configuración de Django              
-│   │   ├── urls.py        # Rutas del frontend                   
-│   │   ├── templates/     # Plantillas HTML para las vistas      
-│   │   ├── static/        # Archivos estáticos (CSS, JS)         
-│   │   └── views.py       # Vistas de Django                     
-│   ├── env/               # Entorno virtual para el frontend     
-│   ├── package.json       # Dependencias para Tailwind CSS       
-│   ├── postcss.config.js  # Configuración de PostCSS             
-│   └── tests/             # Pruebas unitarias del frontend       
-├── firebase/              # Configuración de Firebase            
-│   ├── rules/             # Reglas de seguridad para Firestore   
-│   └── config.json        # Archivo de configuración de Firebase 
+gamificacion/
+├── backend/               # Backend implementado con FastAPI
+│   ├── main.py            # Código principal del backend
+│   ├── venv/              # Entorno virtual para el backend
+│   ├── requirements.txt   # Dependencias del backend
+│   ├── firebase/          # Configuración de Firebase
+│   │   ├── gamification-40fea-firebase-adminsdk-4neas-3c59f8
+│   │   └── prueba.txt
+│   └── .env               # Variables de entorno
+├── frontend/              # Frontend implementado con Next.js
+│   ├── .next/             # Carpeta de compilación de Next.js
+│   ├── node_modules/      # Dependencias de Node.js
+│   ├── public/            # Archivos estáticos (imágenes, etc.)
+│   ├── src/               # Código principal del frontend
+│   │   ├── app/           # Rutas y páginas de la aplicación
+│   │   │   ├── (games)/   # Ruta dinámica para juegos
+│   │   │   │   └── [id]/  # Página dinámica para cada juego
+│   │   │   │       ├── layout.js
+│   │   │   │       └── page.js
+│   │   │   ├── (main)/    # Ruta principal
+│   │   │   │   ├── create/
+│   │   │   │   │   ├── metadata.js
+│   │   │   │   │   └── page.js
+│   │   │   │   ├── layout.js
+│   │   │   │   └── not-found.js
+│   │   ├── components/    # Componentes reutilizables
+│   │   │   ├── createComponents/
+│   │   │   ├── games/
+│   │   │   ├── errorPage.js
+│   │   │   ├── footer.js
+│   │   │   └── game_card.js
+│   │   ├── libs/          # Librerías y utilidades
+│   │   │   └── fontawesome.js
+│   │   ├── styles/        # Estilos CSS
+│   │   │   ├── animations.module.css
+│   │   │   ├── globals.css
+│   │   │   └── sopa_letras.module.css
+│   ├── eslint.config.mjs  # Configuración de ESLint
+│   ├── jsconfig.json      # Configuración de JavaScript
+│   ├── next.config.mjs    # Configuración de Next.js
+│   ├── package.json       # Dependencias de Node.js
+│   ├── package-lock.json  # Versiones exactas de las dependencias
+│   ├── postcss.config.mjs # Configuración de PostCSS
+│   └── tailwind.config.mjs # Configuración de Tailwind CSS
+├── .gitignore             # Archivos y carpetas ignorados por Git
 └── README.md              # Documentación del proyecto
 ```
 
