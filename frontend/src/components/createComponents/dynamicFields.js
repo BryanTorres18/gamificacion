@@ -51,27 +51,27 @@ export default function DynamicFields({ fields, setFields }) {
     };
 
     return (
-        <div>
+        <div className="flex flex-col px-8">
             {/* Renderizar los campos dinámicos */}
             {fields.map((field, index) => (
-                <div key={index} className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">Enunciado</label>
+                <div key={index} className=" bg-[#f8f8f8] mx-0 py-4 rounded-md grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 pr-8 sm:pr-12">
+                    <div className=" pl-4 flex flex-col sm:flex-row gap-4 align-center">
+                        <label className="sm:my-2 text-sm font-medium text-[#686868] grow-0">Enunciado {index+1}</label>
                         <input
                             type="text"
                             value={field.enunciado}
                             onChange={(e) => handleFieldChange(index, "enunciado", e.target.value)}
-                            className="w-full p-2 border rounded-md"
+                            className="p-1 border rounded-md grow focus:border-[#c6c6c6] focus:outline-none"
                             placeholder="Ingrese el enunciado"
                         />
                     </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">Respuesta</label>
+                    <div className="flex flex-col sm:flex-row gap-4 align-center">
+                        <label className="sm:my-2 text-sm font-medium text-[#686868] grow-0">Respuesta</label>
                         <input
                             type="text"
                             value={field.respuesta}
                             onChange={(e) => handleFieldChange(index, "respuesta", e.target.value)}
-                            className="w-full p-2 border rounded-md"
+                            className="p-1 border rounded-md grow focus:border-[#c6c6c6] focus:outline-none"
                             placeholder="Ingrese la respuesta"
                         />
                     </div>
@@ -82,9 +82,9 @@ export default function DynamicFields({ fields, setFields }) {
             <button
                 type="button"
                 onClick={addField}
-                className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4"
+                className="self-end grow-0 bg-[#7f5c9c] hover:bg-[#dec5e3] text-white px-6 py-2 rounded-md mt-4"
             >
-                Añadir Más Campos
+                + Agregar
             </button>
         </div>
     );

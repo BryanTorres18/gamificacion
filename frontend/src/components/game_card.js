@@ -2,6 +2,7 @@
 
 // Importación del hook useRouter de Next.js para la navegación entre páginas.
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 /**
  * Componente funcional GameCard
@@ -32,13 +33,21 @@ export default function GameCard({ game_type }) {
         // Tarjeta principal con estilos y evento onClick para navegación.
         <div
             onClick={handleNavigation} // Navega al hacer clic en la tarjeta.
-            className="block border rounded-lg shadow-md p-4 hover:bg-gray-200 transition cursor-pointer"
+            className="block border-4 border-[#6f00a8] rounded-3xl shadow-md p-4 bg-purple-900 hover:bg-[#dec5e3] transition cursor-pointer"
         >
+            
+            <Image
+                src="/placeholder.svg?height=250&width=250"
+                alt={`${game_type} thumbnail`}
+                width={250}
+                height={250}
+                className="rounded-lg mb-4 aspect-square"
+              />
             {/* Título de la tarjeta con el tipo de juego */}
-            <h2 className="text-lg font-semibold mb-2">{game_type}</h2>
+            <h2 className="text-lg font-semibold mb-2 text-white">{game_type}</h2>
 
             {/* Descripción debajo del título */}
-            <p className="text-sm text-gray-700">
+            <p className="text-sm text-white">
                 Haz clic para configurar un {game_type}
             </p>
         </div>

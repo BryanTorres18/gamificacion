@@ -95,9 +95,9 @@ export default function CreateGamePage() {
     };
 
     return (
-        <main className="container mx-auto p-4">
-            <h1 className="text-5xl font-bold mb-4">{gameType}</h1>
-            <h2 className="text-2xl font-bold mb-4">Ingrese los enunciados con su respuesta:</h2>
+        <main className="container m-0 min-w-full ">
+            <h1 className="text-5xl text-[#7f5c9c] pl-8 py-4 font-bold mb-4 bg-[#dec5e3] w-full">{gameType}</h1>
+            <h2 className="text-2xl text-[#7f5c9c] font-bold mb-4 pl-8">Ingrese los enunciados con su respuesta:</h2>
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Componente para manejar dinámicamente los campos de enunciado y respuesta */}
                 <DynamicFields fields={fields} setFields={setFields} />
@@ -105,7 +105,7 @@ export default function CreateGamePage() {
                 {/* Muestra el campo de tamaño si el juego lo requiere */}
                 {showSizeField && <SizeField size={size} setSize={setSize} />}
 
-                <button type="submit" className="bg-green-500 text-white px-6 py-2 rounded-md mt-4">
+                <button type="submit" className="ml-8 bg-[#7f5c9c] hover:bg-[#dec5e3] text-white px-6 py-2 rounded-md mt-4">
                     Crear Juego
                 </button>
             </form>
