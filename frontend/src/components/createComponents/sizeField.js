@@ -26,9 +26,10 @@ export default function SizeField({ size, setSize }) {
 
     const [selectedButton, setSelectedButton] = useState(15);
 
-  const handleButtonClick = (e) => {
-      setSelectedButton(e.target.value);
-      setSize(Number(e.target.value));
+  const handleButtonClick = (value) => {
+    console.log(value);
+      setSelectedButton(value);
+      setSize(Number(value));
 
   };
 
@@ -37,9 +38,6 @@ export default function SizeField({ size, setSize }) {
          * Contenedor principal del campo de selección de tamaño
          * - mt-6: Aplica un margen superior.
          */
-       
-
-        
 
         <div className="flex space-x-4">
              {/* Etiqueta del campo */}
@@ -47,29 +45,29 @@ export default function SizeField({ size, setSize }) {
                 Tamaño del tablero
             </label>
       <button
-        className={`px-4 py-2 rounded-full border-2 border-[#c6c6c6] ${
-          selectedButton === 10 ? 'bg-[#7f5c9c] text-gray-100' : 'bg-gray-200 text-gray-700 border-2'
+        className={`px-4 py-2 rounded-full border-[#c6c6c6] ${
+          selectedButton === 10 ? 'border-none bg-[#7f5c9c] text-gray-100' : 'bg-gray-200 text-gray-700 border-2'
         }`}
-        onClick={() => handleButtonClick}
-        value={10}
+        onClick={() => handleButtonClick(10)}
+        
       >
         Pequeño
       </button>
       <button
         className={`px-4 py-2 rounded-full ${
-          selectedButton === 15 ? 'bg-[#7f5c9c] text-gray-100' : 'bg-gray-200 text-gray-700 border-2'
+          selectedButton === 15 ? 'border-none bg-[#7f5c9c] text-gray-100' : 'bg-gray-200 text-gray-700 border-2'
         }`}
-        onClick={() => handleButtonClick}
-        value={15}
+        onClick={() => handleButtonClick(15)}
+        
       >
         Mediano
       </button>
       <button
-        className={`px-4 py-2 rounded-full border-2 border-[#c6c6c6] ${
+        className={`px-4 py-2 rounded-full border-[#c6c6c6] ${
           selectedButton === 20 ? 'border-none bg-[#7f5c9c] text-gray-100' : 'bg-gray-200 text-gray-700 border-2'
         }`}
-        onClick={() => handleButtonClick}
-        value={20}
+        onClick={() => handleButtonClick(20)}
+        
       >
         Grande
       </button>
