@@ -9,7 +9,7 @@
  */
 
 import GameCard from "@/components/game_card"; // Importación del componente GameCard
-
+import { Star, Plus } from "lucide-react"
 // Metadatos para SEO
 export const metadata = {
     title: "Inicio - Gamificación",
@@ -26,13 +26,13 @@ export default function IndexPage() {
         <main className="flex flex-col justify-around min-h-screen min-w-full bg-[#563585] bg-[radial-gradient(circle_at_center,#2D1B47_10%,transparent_55%),repeating-conic-gradient(from_10deg_at_center,#2D1B47_0deg,#2D1B47_22.5deg,transparent_22.5deg,transparent_45deg)] relative overflow-hidden">
 
             {/* Decorative elements */}
-      {/* <div className="absolute inset-0">
-        <Star className="absolute text-yellow-400 w-8 h-8 left-[15%] top-[20%]" fill="currentColor" />
-        <Star className="absolute text-yellow-400 w-8 h-8 right-[30%] top-[25%]" fill="currentColor" />
-        <Star className="absolute text-white w-8 h-8 right-[15%] top-[35%]" fill="currentColor" />
-        <Plus className="absolute text-white w-8 h-8 left-[10%] top-[10%] opacity-50" />
-        <Plus className="absolute text-white w-8 h-8 right-[10%] bottom-[20%] opacity-50" />
-      </div> */}
+      <div className="absolute inset-0">
+        <Star className="absolute  text-yellow-400 w-8 h-8 left-[15%] top-[20%]" fill="currentColor" />
+        <Star className="absolute  text-yellow-400 w-8 h-8 right-[30%] top-[25%]" fill="currentColor" />
+        <Star className="absolute  text-white w-8 h-8 right-[15%] top-[35%]" fill="currentColor" />
+        <Plus className="absolute  text-white w-8 h-8 left-[10%] top-[10%] opacity-50" />
+        <Plus className="absolute  text-white w-8 h-8 right-[10%] bottom-[20%] opacity-50" />
+      </div>
             {/* Título y descripción de la página */}
             <div className="text-center mb-8">
                 <h1 className="text-3xl font-bold text-white">Selecciona un Tipo de Juego</h1>

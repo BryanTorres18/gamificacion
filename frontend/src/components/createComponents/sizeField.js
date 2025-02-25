@@ -9,6 +9,8 @@
  * @param {function} props.setSize - Función para actualizar el tamaño del tablero.
  * @returns {JSX.Element} - Un campo de selección de tamaño con un menú desplegable.
  */
+
+import { useState } from "react";
 export default function SizeField({ size, setSize }) {
     /**
      * handleChange
@@ -18,37 +20,61 @@ export default function SizeField({ size, setSize }) {
      *
      * @param {Event} e - Evento del cambio del elemento select.
      */
-    const handleChange = (e) => {
-        setSize(Number(e.target.value)); // Guarda el valor seleccionado como número
-    };
+    // const handleChange = (e) => {
+    //     setSize(Number(e.target.value)); // Guarda el valor seleccionado como número
+    // };
+
+    const [selectedButton, setSelectedButton] = useState(15);
+
+  const handleButtonClick = (e) => {
+      setSelectedButton(e.target.value);
+      setSize(Number(e.target.value));
+
+  };
 
     return (
         /**
          * Contenedor principal del campo de selección de tamaño
          * - mt-6: Aplica un margen superior.
          */
-        <div id="sizeField" className="mt-6">
-            {/* Etiqueta del campo */}
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+       
+
+        
+
+        <div className="flex space-x-4">
+             {/* Etiqueta del campo */}
+             <label className="block text-sm font-medium text-[#7f5c9c] mb-2">
                 Tamaño del tablero
             </label>
-
-            {/* Menú desplegable para seleccionar el tamaño */}
-            <select
-                value={size} // Tamaño actual seleccionado
-                onChange={handleChange} // Maneja cambios en el valor seleccionado
-                className="w-full p-2 border rounded-md" // Estilos para el menú desplegable
-            >
-                {/* Opción predeterminada deshabilitada */}
-                <option value="" disabled>
-                    Selecciona un tamaño
-                </option>
-                {/* Opciones de tamaño predefinidas */}
-                <option value={10}>Pequeño (10x10)</option>
-                <option value={15}>Mediano (15x15)</option>
-                <option value={20}>Grande (20x20)</option>
-            </select>
-        </div>
+      <button
+        className={`px-4 py-2 rounded-full border-2 border-[#c6c6c6] ${
+          selectedButton === 10 ? 'bg-[#7f5c9c] text-gray-100' : 'bg-gray-200 text-gray-700 border-2'
+        }`}
+        onClick={() => handleButtonClick}
+        value={10}
+      >
+        Pequeño
+      </button>
+      <button
+        className={`px-4 py-2 rounded-full ${
+          selectedButton === 15 ? 'bg-[#7f5c9c] text-gray-100' : 'bg-gray-200 text-gray-700 border-2'
+        }`}
+        onClick={() => handleButtonClick}
+        value={15}
+      >
+        Mediano
+      </button>
+      <button
+        className={`px-4 py-2 rounded-full border-2 border-[#c6c6c6] ${
+          selectedButton === 20 ? 'border-none bg-[#7f5c9c] text-gray-100' : 'bg-gray-200 text-gray-700 border-2'
+        }`}
+        onClick={() => handleButtonClick}
+        value={20}
+      >
+        Grande
+      </button>
+    </div>
+       
     );
 }
 

@@ -33,7 +33,7 @@ export default function GameCard({ game_type }) {
         // Tarjeta principal con estilos y evento onClick para navegación.
         <div
             onClick={handleNavigation} // Navega al hacer clic en la tarjeta.
-            className="block border-4 border-[#6f00a8] rounded-3xl shadow-md p-4 bg-purple-900 hover:bg-[#dec5e3] transition cursor-pointer"
+            className="z-[1] block border-4 border-[#6f00a8] rounded-3xl shadow-md p-4 bg-purple-900 hover:bg-[#dec5e3] transition cursor-pointer"
         >
             
             <Image
