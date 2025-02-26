@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import DynamicFields from "@/components/createComponents/dynamicFields";
 import SizeField from "@/components/createComponents/sizeField";
 import { useSearchParams } from "next/navigation";
+import { Toaster, toast } from "sonner";  // Importa Sonner para mostrar las alertas
 
 /**
  * Página para la creación de juegos en la plataforma de gamificación.
@@ -49,13 +50,37 @@ export default function CreateGamePage() {
             (field) => !field.enunciado.trim() || !field.respuesta.trim()
         );
         if (emptyFields) {
-            alert("Por favor, completa todos los campos antes de enviar.");
+            toast.error("Por favor, completa todos los campos antes de enviar.", {
+                style: {
+                    color: 'white',
+                    fontSize: '16px',
+                    padding: '16px',
+                    borderRadius: '8px',
+                    width: '400px',
+                    background: '#FFBF00',
+                },
+                duration: 3000,
+                position: 'bottom-right',
+                closeButton: true,
+            });
             return;
         }
 
         // Validación: Si el tamaño es obligatorio, verificar que esté definido
         if (showSizeField && !size) {
-            alert("Por favor, selecciona un tamaño para el tablero.");
+            toast.error("Por favor, selecciona un tamaño para el tablero.", {
+                style: {
+                    color: 'white',
+                    fontSize: '16px',
+                    padding: '16px',
+                    borderRadius: '8px',
+                    width: '400px',
+                    background: '#FFBF00',
+                },
+                duration: 3000,
+                position: 'bottom-right',
+                closeButton: true,
+            });
             return;
         }
 
@@ -89,11 +114,35 @@ export default function CreateGamePage() {
 
             const result = await response.json();
             console.log("Juego guardado exitosamente:", result);
-            alert("¡Juego creado exitosamente!");
+            toast.success("¡Juego creado exitosamente!", {
+                style: {
+                    color: 'white',
+                    fontSize: '16px',
+                    padding: '16px',
+                    borderRadius: '8px',
+                    width: '400px',
+                    background: '#7F5C9C',
+                },
+                duration: 3000,
+                position: 'bottom-right',
+                closeButton: true,
+            });
             window.open(`/games/${result.id}`, "_blank"); // Abre la página del juego creado
         } catch (error) {
             console.error("Error al enviar datos:", error);
-            alert("Hubo un error al guardar el juego.");
+            toast.error("Hubo un error al guardar el juego.", {
+                style: {
+                    color: 'white',
+                    fontSize: '16px',
+                    padding: '16px',
+                    borderRadius: '8px',
+                    width: '400px',
+                    background: '#C70039',
+                },
+                duration: 3000,
+                position: 'bottom-right',
+                closeButton: true,
+            });
         }
     };
 
@@ -131,9 +180,12 @@ export default function CreateGamePage() {
                     </button>
                 </form>
             </div>
+            {/* Toaster para mostrar las alertas */}
+            <Toaster />
         </main>
     );
 }
+
 
 
 
