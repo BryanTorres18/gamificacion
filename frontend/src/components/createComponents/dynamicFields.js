@@ -54,38 +54,47 @@ export default function DynamicFields({ fields, setFields }) {
         <div className="flex flex-col px-8">
             {/* Renderizar los campos dinámicos */}
             {fields.map((field, index) => (
-                <div key={index} className=" bg-[#f8f8f8] mx-0 py-4 rounded-md grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 pr-8 sm:pr-12">
-                    <div className=" pl-4 flex flex-col sm:flex-row gap-4 align-center">
-                        <label className="sm:my-2 text-sm font-medium text-[#686868] grow-0">Enunciado {index+1}</label>
-                        <input
-                            type="text"
-                            value={field.enunciado}
-                            onChange={(e) => handleFieldChange(index, "enunciado", e.target.value)}
-                            className="p-1 border rounded-md grow focus:border-[#c6c6c6] focus:outline-none"
-                            placeholder="Ingrese el enunciado"
-                        />
-                    </div>
-                    <div className="flex flex-col sm:flex-row gap-4 align-center">
-                        <label className="sm:my-2 text-sm font-medium text-[#686868] grow-0">Respuesta</label>
-                        <input
-                            type="text"
-                            value={field.respuesta}
-                            onChange={(e) => handleFieldChange(index, "respuesta", e.target.value)}
-                            className="p-1 border rounded-md grow focus:border-[#c6c6c6] focus:outline-none"
-                            placeholder="Ingrese la respuesta"
-                        />
+                <div key={index} className="bg-gray-50 rounded-md p-4 mb-4">
+                    <div className="flex flex-col md:flex-row md:items-center md:space-x-6">
+                        <div className="flex flex-col md:flex-row md:items-center mb-4 md:mb-0 w-full md:w-1/2">
+                            <label className="font-bold text-gray-700 mb-2 md:mb-0 md:mr-4 md:w-32 flex-shrink-0">
+                                Enunciado {index + 1}
+                            </label>
+                            <input
+                                type="text"
+                                value={field.enunciado}
+                                onChange={(e) => handleFieldChange(index, "enunciado", e.target.value)}
+                                className="p-2 border rounded-md w-full focus:border-purple-400 focus:outline-none"
+                                placeholder="Ingrese el enunciado"
+                            />
+                        </div>
+
+                        <div className="flex flex-col md:flex-row md:items-center w-full md:w-1/2">
+                            <label className="font-bold text-gray-700 mb-2 md:mb-0 md:mr-4 md:w-24 flex-shrink-0">
+                                Respuesta
+                            </label>
+                            <input
+                                type="text"
+                                value={field.respuesta}
+                                onChange={(e) => handleFieldChange(index, "respuesta", e.target.value)}
+                                className="p-2 border rounded-md w-full focus:border-purple-400 focus:outline-none"
+                                placeholder="Ingrese la respuesta"
+                            />
+                        </div>
                     </div>
                 </div>
             ))}
 
             {/* Botón para añadir más campos */}
-            <button
-                type="button"
-                onClick={addField}
-                className="self-end grow-0 bg-[#7f5c9c] hover:bg-[#dec5e3] text-white px-6 py-2 rounded-md mt-4"
-            >
-                + Agregar
-            </button>
+            <div className="flex justify-end mt-4">
+                <button
+                    type="button"
+                    onClick={addField}
+                    className="bg-[#7f5c9c] hover:bg-[#dec5e3] text-white font-medium py-2 px-4 rounded-md flex items-center"
+                >
+                    <span className="mr-1">+</span> Agregar
+                </button>
+            </div>
         </div>
     );
 }

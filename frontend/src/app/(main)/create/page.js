@@ -20,15 +20,18 @@ export default function CreateGamePage() {
     // Estados para almacenar datos del formulario
     const [fields, setFields] = useState([{ enunciado: "", respuesta: "" }]); // Lista de enunciados y respuestas
     const [showSizeField, setShowSizeField] = useState(false); // Controla la visibilidad del campo de tamaño
-    const [size, setSize] = useState(""); // Tamaño del tablero en caso de ser necesario
+    const [size, setSize] = useState(15); // Tamaño del tablero, inicializado con 15 para coincidir con el valor predeterminado de SizeField
 
     /**
      * Efecto secundario que determina si se debe mostrar el campo de tamaño basado en el tipo de juego.
      * Se activa cuando `gameType` cambia.
      */
     useEffect(() => {
+        // Verifica el tipo de juego y muestra el campo de tamaño si es necesario
         if (gameType === "Sopa de Letras") {
             setShowSizeField(true);
+        } else {
+            setShowSizeField(false); // Oculta el campo si no es necesario
         }
     }, [gameType]);
 
@@ -95,20 +98,39 @@ export default function CreateGamePage() {
     };
 
     return (
-        <main className="container m-0 min-w-full ">
-            <h1 className="text-5xl text-[#7f5c9c] pl-8 py-4 font-bold mb-4 bg-[#dec5e3] w-full">{gameType}</h1>
-            <h2 className="text-2xl text-[#7f5c9c] font-bold mb-4 pl-8">Ingrese los enunciados con su respuesta:</h2>
-            <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Componente para manejar dinámicamente los campos de enunciado y respuesta */}
-                <DynamicFields fields={fields} setFields={setFields} />
+        <main className="flex flex-col min-h-screen bg-white">
+            {/* Header con estilo similar al mockup */}
+            <div className="w-full bg-[#dec5e3] py-4">
+                <h1 className="text-4xl md:text-5xl text-[#7f5c9c] font-bold px-6 md:px-8">
+                    {gameType}
+                </h1>
+            </div>
 
-                {/* Muestra el campo de tamaño si el juego lo requiere */}
-                {showSizeField && <SizeField size={size} setSize={setSize} />}
+            {/* Contenido principal con padding consistente */}
+            <div className="flex-1 px-6 md:px-8 py-6">
+                <h2 className="text-xl md:text-2xl text-[#7f5c9c] font-bold mb-6">
+                    Ingrese los enunciados con su respuesta:
+                </h2>
 
-                <button type="submit" className="ml-8 bg-[#7f5c9c] hover:bg-[#dec5e3] text-white px-6 py-2 rounded-md mt-4">
-                    Crear Juego
-                </button>
-            </form>
+                <form onSubmit={handleSubmit} className="space-y-8 max-w-13xl">
+                    {/* Componente para manejar dinámicamente los campos */}
+                    <DynamicFields fields={fields} setFields={setFields}/>
+
+                    {/* Muestra el campo de tamaño si el juego lo requiere */}
+                    {showSizeField && (
+                        <div className="mt-8">
+                            <SizeField size={size} setSize={setSize}/>
+                        </div>
+                    )}
+
+                    <button
+                        type="submit"
+                        className="mt-6 bg-[#7f5c9c] hover:bg-[#9370b5] text-white px-7 py-3 rounded-md font-medium transition-colors"
+                    >
+                        Crear Juego
+                    </button>
+                </form>
+            </div>
         </main>
     );
 }

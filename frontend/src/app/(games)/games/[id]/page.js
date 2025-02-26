@@ -6,6 +6,7 @@ import QuestionList from "@/components/games/questionsList";
 import HeaderGames from "@/components/games/headerGames";
 import CrucigramaBoard from "@/components/games/crucigrama/crucigramaBoard";
 import LoadingScreen from "@/components/games/loadingScreen";
+import {Toaster} from "sonner";
 
 export default function GamePage({ params }) {
     const [id, setId] = useState(null);
@@ -53,10 +54,10 @@ export default function GamePage({ params }) {
     return (
         <div className="min-h-screen flex flex-col">
             <HeaderGames id={id} gameType={game.game_type} />
-            <section className="flex flex-grow flex-col mt-10 px-4">
+            <section className="flex flex-grow flex-col mt-10 px-4 sm:px-6">
                 <div className="flex flex-col lg:flex-row gap-8 flex-grow">
                     {game.game_type === "Sopa de Letras" && (
-                        <div className="flex flex-col lg:flex-row justify-between flex-grow bg-blue-100 rounded-lg p-4">
+                        <div className="flex flex-col lg:flex-row justify-between flex-grow rounded-lg p-4">
                             {/* Tablero */}
                             <div className="flex-grow lg:w-2/3">
                                 <div className="bg-white rounded-xl shadow-lg overflow-hidden flex justify-center items-center w-full h-full">
@@ -76,7 +77,7 @@ export default function GamePage({ params }) {
                                 <div className="bg-white rounded-xl shadow-lg p-6">
                                     <div className="mb-4">
                                         <div
-                                            className="bg-blue-100 text-blue-800 text-center py-2 px-4 rounded-lg font-medium">
+                                            className="bg-headergamestext text-amber-50 text-center py-2 px-4 rounded-lg font-bold text-lg">
                                             Palabras
                                         </div>
                                     </div>
@@ -95,7 +96,7 @@ export default function GamePage({ params }) {
                     )}
 
                     {game.game_type === "Crucigrama" && (
-                        <div className="flex justify-center items-center flex-grow bg-green-100 rounded-lg p-4">
+                        <div className="flex justify-center items-center flex-grow bg-gray-200 rounded-lg p-4">
                             {/* Tablero del crucigrama */}
                             <div className="bg-white rounded-xl shadow-lg overflow-hidden flex justify-center items-center w-full h-full">
                                 <CrucigramaBoard
@@ -112,6 +113,7 @@ export default function GamePage({ params }) {
                     )}
                 </div>
             </section>
+            <Toaster />
         </div>
     );
 }

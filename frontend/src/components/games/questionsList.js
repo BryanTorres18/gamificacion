@@ -2,31 +2,40 @@ import { motion } from "framer-motion";
 
 export default function QuestionList({ questions, foundWords }) {
     return (
-        <div className="space-y-4">
-            <ul className="space-y-2">
+        <div className="bg-white rounded-xl shadow-lg p-6">
+            <div className="space-y-4">
                 {questions.map((q, index) => {
                     const isFound = foundWords.includes(q.answer);
 
                     return (
-                        <motion.li
+                        <motion.div
                             key={index}
                             initial={false}
                             animate={{
-                                opacity: isFound ? 0.6 : 1,
+                                opacity: isFound ? 0.8 : 1,
                                 scale: isFound ? 0.98 : 1
                             }}
                             className={`
-                                p-3 rounded-lg transition-colors duration-200
+                                p-4 
+                                rounded-lg 
+                                border
+                                transition-all 
+                                duration-300
                                 ${isFound
-                                ? 'bg-gray-100 line-through text-gray-500'
-                                : 'bg-blue-50 text-blue-900'}
+                                ? 'bg-[#DEC5E3] border-[#7F5C9C]'
+                                : 'border-gray-200'}
                             `}
                         >
-                            {q.question}
-                        </motion.li>
+                            <p className="text-gray-700">
+                                <span className="font-bold mr-2">
+                                    {index + 1}.
+                                </span>
+                                {q.question}
+                            </p>
+                        </motion.div>
                     );
                 })}
-            </ul>
+            </div>
         </div>
     );
 }

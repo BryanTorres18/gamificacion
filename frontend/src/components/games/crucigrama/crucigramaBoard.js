@@ -30,34 +30,91 @@ const CrucigramaBoard = ({ gameData }) => {
     }, []);
 
     const containerVariants = {
-        hidden: { opacity: 0, y: 20 },
+        hidden: {
+            opacity: 0,
+            scale: 0.9
+        },
+        visible: {
+            opacity: 1,
+            scale: 1,
+            transition: {
+                duration: 0.5,
+                staggerChildren: 0.1
+            }
+        }
+    };
+
+    // Variantes para las celdas del crucigrama
+    const cellVariants = {
+        hidden: {
+            opacity: 0,
+            scale: 0.5
+        },
+        visible: {
+            opacity: 1,
+            scale: 1,
+            transition: {
+                type: "spring",
+                stiffness: 200,
+                damping: 15
+            }
+        }
+    };
+
+    // Variantes para las preguntas
+    const questionVariants = {
+        hidden: {
+            x: -20,
+            opacity: 0,
+            scale: 0.95
+        },
+        visible: {
+            x: 0,
+            opacity: 1,
+            scale: 1,
+            transition: {
+                type: "spring",
+                stiffness: 70,
+                damping: 12,
+                mass: 0.8
+            }
+        },
+        hover: {
+            x: 8,
+            scale: 1.02,
+            transition: {
+                type: "spring",
+                stiffness: 400,
+                damping: 10
+            }
+        },
+        tap: {
+            scale: 0.98,
+            transition: {
+                type: "spring",
+                stiffness: 400,
+                damping: 10
+            }
+        }
+    };
+
+    // Mejoramos las variantes para las secciones de preguntas
+    const sectionVariants = {
+        hidden: {
+            opacity: 0,
+            y: 15
+        },
         visible: {
             opacity: 1,
             y: 0,
-            transition: { duration: 0.5 }
-        }
-    };
-
-    const cellVariants = {
-        initial: { scale: 0.8, opacity: 0 },
-        animate: {
-            scale: 1,
-            opacity: 1,
-            transition: { duration: 0.3 }
-        },
-        completed: {
-            backgroundColor: "#86efac",
-            scale: 1.05,
-            transition: { duration: 0.2 }
-        }
-    };
-
-    const questionVariants = {
-        hidden: { opacity: 0, height: 0 },
-        visible: {
-            opacity: 1,
-            height: "auto",
-            transition: { duration: 0.3 }
+            transition: {
+                type: "spring",
+                stiffness: 50,
+                damping: 15,
+                mass: 1,
+                staggerChildren: 0.08,
+                delayChildren: 0.1
+            }
         }
     };
 
@@ -393,6 +450,24 @@ const CrucigramaBoard = ({ gameData }) => {
         return null;
     };
 
+    const getNumberPosition = (rowIndex, colIndex, direction) => {
+        // Verificar si hay números en ambas direcciones
+        const horizontalNumber = direction === "horizontal";
+        const hasIntersection = grid[rowIndex][colIndex].question.split(',').length > 1;
+
+        if (hasIntersection) {
+            // Si es una intersección, ajustar posición según la dirección
+            if (horizontalNumber) {
+                return "absolute -right-2 -top-2";
+            } else {
+                return "absolute -left-2 -top-2";
+            }
+        }
+
+        // Si no hay intersección, mantener la posición original
+        return "absolute -left-2 -top-2";
+    };
+
     useEffect(() => {
         if (gameData?.questions) {
             placeWordsCrossed(gameData.questions);
@@ -400,147 +475,236 @@ const CrucigramaBoard = ({ gameData }) => {
     }, [gameData]);
 
     return (
-        <motion.div className="w-full max-w-7xl mx-auto px-4">
-            <div className="flex flex-col lg:flex-row gap-6">
-                <motion.div className="flex-1 rounded-2xl shadow-2xl overflow-hidden">
-                    <div className="w-full h-full bg-white/90 backdrop-blur-sm rounded-2xl p-6">
-                        <div className="flex justify-center items-center">
-                            <div className="relative">
-                                <div className="grid gap-0 relative z-10"
-                                     style={{
-                                         gridTemplateColumns: `repeat(${gridSize}, ${cellSize}px)`,
-                                         width: `${gridSize * cellSize}px`
-                                     }}>
-                                    {grid.map((row, rowIndex) => (
-                                        row.map((cell, colIndex) => {
-                                            const isCompleted = cell && isCellFromCompletedWord(rowIndex, colIndex, grid);
-                                            return (
-                                                <div
-                                                    key={`${rowIndex}-${colIndex}`}
-                                                    className="relative"
-                                                    style={{
-                                                        width: cellSize,
-                                                        height: cellSize
-                                                    }}
-                                                >
-                                                    {cell && (
-                                                        <div className={`
+        <motion.div
+            className="w-full max-w-7xl mx-auto p-4"
+            initial="hidden"
+            animate="visible"
+            variants={containerVariants}
+        >
+            <div className="flex flex-col lg:flex-row gap-8">
+                {/* Panel del Crucigrama */}
+                <motion.div
+                    className="flex-1 p-6"
+                    variants={containerVariants}
+                >
+                    <div className="flex justify-center items-center">
+                        <div className="relative">
+                            <motion.div
+                                className="grid gap-0 relative z-10"
+                                style={{
+                                    gridTemplateColumns: `repeat(${gridSize}, ${cellSize}px)`,
+                                    width: `${gridSize * cellSize}px`
+                                }}
+                                variants={containerVariants}
+                            >
+                                {grid.map((row, rowIndex) => (
+                                    row.map((cell, colIndex) => {
+                                        const isCompleted = cell && isCellFromCompletedWord(rowIndex, colIndex, grid);
+                                        const position = cell && wordPositions.get(cell.question?.split(',')[0]);
+                                        const wordNumber = isStartOfWord(rowIndex, colIndex, grid);
+
+                                        return (
+                                            <motion.div
+                                                key={`${rowIndex}-${colIndex}`}
+                                                className="relative"
+                                                style={{
+                                                    width: cellSize,
+                                                    height: cellSize
+                                                }}
+                                                variants={cellVariants}
+                                                whileHover={cell ? {scale: 1.1, zIndex: 20} : {}}
+                                                whileTap={cell ? {scale: 0.95} : {}}
+                                            >
+                                                {cell && (
+                                                    <motion.div
+                                                        className={`
                                                             absolute 
-                                                            inset-0.5 
-                                                            rounded-sm
+                                                            inset-0
                                                             border-2
+                                                            border-black
                                                             transition-all
                                                             duration-300
                                                             ${isCompleted
-                                                            ? 'border-green-500 bg-green-100'
-                                                            : 'border-blue-300 bg-white hover:bg-blue-50'}
-                                                        `}>
-                                                            {isStartOfWord(rowIndex, colIndex, grid) && (
-                                                                <div className="absolute left-1 top-0.5 text-xs font-bold text-blue-600">
-                                                                    {isStartOfWord(rowIndex, colIndex, grid)}
-                                                                </div>
-                                                            )}
-                                                            <input
-                                                                type="text"
-                                                                maxLength={1}
-                                                                value={cell.userValue || ''}
-                                                                onChange={(e) => handleCellChange(rowIndex, colIndex, e.target.value)}
-                                                                className={`
-                                                                    w-full 
-                                                                    h-full
-                                                                    text-center
-                                                                    font-bold
-                                                                    text-lg
-                                                                    uppercase
-                                                                    outline-none
-                                                                    transition-colors
-                                                                    duration-300
-                                                                    ${isCompleted
-                                                                    ? 'bg-green-100 text-green-800 cursor-not-allowed'
-                                                                    : 'bg-transparent hover:bg-blue-50'}
-                                                                `}
-                                                                disabled={isCompleted}
-                                                            />
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            );
-                                        })
-                                    ))}
-                                </div>
-                            </div>
+                                                            ? 'bg-blue-500'
+                                                            : cell.userValue
+                                                                ? 'bg-blue-200'
+                                                                : 'bg-yellow-200'}
+                                                        `}
+                                                        animate={isCompleted ? {
+                                                            scale: [1, 1.1, 1],
+                                                            backgroundColor: ["#93C5FD", "#3B82F6", "#93C5FD"],
+                                                        } : {}}
+                                                    >
+                                                        {wordNumber && cell.question.split(',').map((q, index) => {
+                                                            const pos = wordPositions.get(q);
+                                                            if (pos?.startRow === rowIndex && pos?.startCol === colIndex) {
+                                                                return (
+                                                                    <div
+                                                                        key={q}
+                                                                        className={`${getNumberPosition(rowIndex, colIndex, pos.direction)} w-5 h-5 bg-black rounded-full flex items-center justify-center z-10`}
+                                                                    >
+                                                                        <span className="text-xs font-bold text-white">
+                                                                            {questionNumbers.get(q)}
+                                                                        </span>
+                                                                    </div>
+                                                                );
+                                                            }
+                                                            return null;
+                                                        })}
+                                                        <input
+                                                            type="text"
+                                                            maxLength={1}
+                                                            value={cell.userValue || ''}
+                                                            onChange={(e) => handleCellChange(rowIndex, colIndex, e.target.value)}
+                                                            className={`
+                                                                w-full 
+                                                                h-full
+                                                                text-center
+                                                                font-bold
+                                                                text-lg
+                                                                uppercase
+                                                                outline-none
+                                                                transition-colors
+                                                                duration-300
+                                                                ${isCompleted
+                                                                ? 'bg-blue-500 text-white'
+                                                                : cell.userValue
+                                                                    ? 'bg-blue-200 text-black'
+                                                                    : 'bg-yellow-200 text-black'}
+                                                            `}
+                                                            disabled={isCompleted}
+                                                        />
+                                                    </motion.div>
+                                                )}
+                                            </motion.div>
+                                        );
+                                    })
+                                ))}
+                            </motion.div>
                         </div>
                     </div>
                 </motion.div>
 
-                {/* Panel de preguntas */}
-                <div className="lg:w-80 flex flex-col">
-                    <AnimatePresence>
-                        {(showQuestions || window.innerWidth >= 1024) && (
-                            <motion.div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-6">
-                                {/* Horizontales */}
-                                <div className="mb-6">
-                                    <h2 className="text-xl font-bold mb-4 text-blue-800 border-b-2 border-blue-100 pb-2">
-                                        Horizontales
-                                    </h2>
-                                    <ul className="space-y-3">
-                                        {questions
-                                            .filter(({question}) => wordPositions.get(question)?.direction === "horizontal")
-                                            .map(({question}) => (
-                                                <li
-                                                    key={question}
-                                                    className={`
-                                                        p-3 
-                                                        rounded-lg 
-                                                        transition-all 
-                                                        duration-300
-                                                        ${completedWords.has(question)
-                                                        ? 'bg-green-100 text-green-800'
-                                                        : 'hover:bg-blue-50'}
-                                                    `}
+                {/* Panel de Preguntas */}
+                <motion.div
+                    className="lg:w-96"
+                    variants={containerVariants}
+                >
+                    <motion.div
+                        className="bg-white rounded-xl shadow-lg p-6 space-y-8"
+                        variants={sectionVariants}
+                        initial="hidden"
+                        animate="visible"
+                    >
+                        {/* Verticales */}
+                        <motion.div variants={sectionVariants}>
+                            <motion.h2
+                                className="text-3xl font-bold mb-4 text-purple-600"
+                                variants={questionVariants}
+                            >
+                                Vertical
+                            </motion.h2>
+                            <motion.div
+                                className="space-y-3"
+                                variants={sectionVariants}
+                            >
+                                <AnimatePresence>
+                                    {questions
+                                        .filter(({question}) => wordPositions.get(question)?.direction === "vertical")
+                                        .map(({question}) => (
+                                            <motion.div
+                                                key={question}
+                                                className={`
+                                        p-4 
+                                        rounded-lg 
+                                        border
+                                        shadow-lg
+                                        transition-all 
+                                        duration-300
+                                        ${completedWords.has(question)
+                                                    ? 'bg-[#DEC5E3] border-[#7F5C9C]'
+                                                    : 'bg-white border-gray-200 hover:border-purple-300'}
+                                    `}
+                                                variants={questionVariants}
+                                                initial="hidden"
+                                                animate="visible"
+                                                whileHover="hover"
+                                                whileTap="tap"
+                                                layout
+                                            >
+                                                <motion.p
+                                                    className="text-gray-700"
+                                                    layout
                                                 >
-                                                    <span className="font-bold text-blue-700">
-                                                        {questionNumbers.get(question)}.
-                                                    </span>
+                                                    <motion.span
+                                                        className="inline-flex items-center justify-center w-5 h-5 bg-black rounded-full text-white text-xs font-bold mr-2"
+                                                        layout
+                                                    >
+                                                        {questionNumbers.get(question)}
+                                                    </motion.span>
                                                     {question}
-                                                </li>
-                                            ))}
-                                    </ul>
-                                </div>
-
-                                {/* Verticales */}
-                                <div>
-                                    <h2 className="text-xl font-bold mb-4 text-blue-800 border-b-2 border-blue-100 pb-2">
-                                        Verticales
-                                    </h2>
-                                    <ul className="space-y-3">
-                                        {questions
-                                            .filter(({question}) => wordPositions.get(question)?.direction === "vertical")
-                                            .map(({question}) => (
-                                                <li
-                                                    key={question}
-                                                    className={`
-                                                        p-3 
-                                                        rounded-lg 
-                                                        transition-all 
-                                                        duration-300
-                                                        ${completedWords.has(question)
-                                                        ? 'bg-green-100 text-green-800'
-                                                        : 'hover:bg-blue-50'}
-                                                    `}
-                                                >
-                                                    <span className="font-bold text-blue-700">
-                                                        {questionNumbers.get(question)}.
-                                                    </span>
-                                                    {question}
-                                                </li>
-                                            ))}
-                                    </ul>
-                                </div>
+                                                </motion.p>
+                                            </motion.div>
+                                        ))}
+                                </AnimatePresence>
                             </motion.div>
-                        )}
-                    </AnimatePresence>
-                </div>
+                        </motion.div>
+
+                        {/* Horizontales - mismo patrón que Verticales */}
+                        <motion.div variants={sectionVariants}>
+                            <motion.h2
+                                className="text-3xl font-bold mb-4 text-purple-600"
+                                variants={questionVariants}
+                            >
+                                Horizontal
+                            </motion.h2>
+                            <motion.div
+                                className="space-y-3"
+                                variants={sectionVariants}
+                            >
+                                <AnimatePresence>
+                                    {questions
+                                        .filter(({question}) => wordPositions.get(question)?.direction === "horizontal")
+                                        .map(({question}) => (
+                                            <motion.div
+                                                key={question}
+                                                className={`
+                                        p-4 
+                                        rounded-lg 
+                                        border
+                                        shadow-lg
+                                        transition-all 
+                                        duration-300
+                                        ${completedWords.has(question)
+                                                    ? 'bg-[#DEC5E3] border-[#7F5C9C]'
+                                                    : 'bg-white border-gray-200 hover:border-purple-300'}
+                                    `}
+                                                variants={questionVariants}
+                                                initial="hidden"
+                                                animate="visible"
+                                                whileHover="hover"
+                                                whileTap="tap"
+                                                layout
+                                            >
+                                                <motion.p
+                                                    className="text-gray-700"
+                                                    layout
+                                                >
+                                                    <motion.span
+                                                        className="inline-flex items-center justify-center w-5 h-5 bg-black rounded-full text-white text-xs font-bold mr-2"
+                                                        layout
+                                                    >
+                                                        {questionNumbers.get(question)}
+                                                    </motion.span>
+                                                    {question}
+                                                </motion.p>
+                                            </motion.div>
+                                        ))}
+                                </AnimatePresence>
+                            </motion.div>
+                        </motion.div>
+                    </motion.div>
+                </motion.div>
             </div>
         </motion.div>
     );

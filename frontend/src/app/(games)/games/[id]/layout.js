@@ -16,8 +16,8 @@ export const metadata = {
 
 export default function GameLayout({ children }) {
     return (
-        <div className="min-h-screen bg-red-200">
-            <main className="min-h-screen bg-red-200">
+        <div className="min-h-screen bg-gamebackground">
+            <main className="min-h-screen bg-gamebackground">
                 <div className="container mx-auto flex-grow p-4">
                     {children}
                 </div>

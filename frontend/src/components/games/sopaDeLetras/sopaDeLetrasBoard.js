@@ -115,10 +115,10 @@ export default function SopaLetrasBoard({ size = 10, questions, onWordFound }) {
         <div className="relative w-full max-w-3xl mx-auto">
             {/* Contenedor responsivo */}
             <div className="aspect-square w-full">
-                <div className="bg-gray-100 p-4 rounded-lg relative overflow-auto">
-                    {/* Tablero con fondo azul */}
+                <div className=" p-4 rounded-lg relative overflow-auto">
+                    {/* Tablero */}
                     <motion.div
-                        className="bg-blue-900 p-4 sm:p-6 md:p-8 rounded-2xl grid gap-1"
+                        className="bg-[#7F5C9C] p-4 sm:p-6 md:p-8 rounded-2xl grid gap-1"
                         style={{
                             gridTemplateColumns: `repeat(${size}, minmax(20px, 1fr))`, // Ajusta las columnas dinámicamente
                             minWidth: `${size * 40}px`, // Asegura que el fondo azul abarque el ancho total
@@ -140,12 +140,12 @@ export default function SopaLetrasBoard({ size = 10, questions, onWordFound }) {
                                     <motion.div
                                         key={`${rowIndex}-${colIndex}`}
                                         className={`aspect-square flex items-center justify-center
-                                    text-sm sm:text-base font-medium rounded cursor-pointer select-none
+                                    text-xl sm:text-xl font-bold rounded cursor-pointer select-none
                                     ${
                                             isFound
-                                                ? "bg-green-400 text-white shadow-md"
+                                                ? "bg-[#341D47] text-white shadow-md"
                                                 : isSelected
-                                                    ? "bg-yellow-300 shadow-md transform -translate-y-0.5"
+                                                    ? "bg-[#DEC5E3] shadow-md transform -translate-y-0.5"
                                                     : "bg-white hover:bg-gray-50"
                                         }`}
                                         whileHover={!isFound ? { scale: 1.05 } : {}}
