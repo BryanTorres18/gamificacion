@@ -4,20 +4,26 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-/**
- * Componente funcional GameCard
- *
- * Este componente representa una tarjeta que permite al usuario navegar
- * hacia la página de configuración de un juego específico basado en el tipo de juego seleccionado.
- *
- * @param {Object} props - Las propiedades recibidas por el componente.
- * @param {string} props.game_type - El tipo de juego que se mostrará en la tarjeta
- *                                    (por ejemplo, "Crucigrama", "Sopa de letras").
- * @returns {JSX.Element} - Una tarjeta interactiva con información sobre el tipo de juego.
- */
 export default function GameCard({ game_type }) {
     // Hook para manejar la navegación dentro de la aplicación.
     const router = useRouter();
+
+    /**
+     * getImagePath
+     *
+     * Función que determina la ruta de la imagen según el tipo de juego.
+     * @returns {string} Ruta de la imagen correspondiente al tipo de juego.
+     */
+    const getImagePath = () => {
+        switch(game_type) {
+            case "Crucigrama":
+                return "/logos/logoCrucigrama.png";
+            case "Sopa de Letras":
+                return "/logos/logoSopaDeLetras.png";
+            default:
+                return "/placeholder.svg?height=250&width=250";
+        }
+    };
 
     /**
      * handleNavigation
@@ -30,27 +36,30 @@ export default function GameCard({ game_type }) {
     };
 
     return (
-        // Tarjeta principal con estilos y evento onClick para navegación.
+        // Contenedor principal de la tarjeta
         <div
-            onClick={handleNavigation} // Navega al hacer clic en la tarjeta.
-            className="z-[1] block border-4 border-[#6f00a8] rounded-3xl shadow-md p-4 bg-purple-900 hover:bg-[#dec5e3] transition cursor-pointer"
+            onClick={handleNavigation}
+            className="game-card-container z-[1] block border-4 border-[#6f00a8] rounded-3xl shadow-md p-4 bg-purple-900 hover:bg-[#dec5e3] transition cursor-pointer relative"
         >
+            {/* Contenedor de la animación de llamas */}
+            <div className="flames-animation"></div>
 
-            <Image
-                src="/placeholder.svg?height=250&width=250"
-                alt={`${game_type} thumbnail`}
-                width={250}
-                height={250}
-                className="rounded-lg mb-4 aspect-square"
-            />
-            {/* Título de la tarjeta con el tipo de juego */}
-            <h2 className="text-lg font-semibold mb-2 text-white">{game_type}</h2>
+            {/* Contenedor de la imagen del juego */}
+            <div className="game-card-image-container mb-4 aspect-square w-full h-auto">
+                <Image
+                    src={getImagePath()}
+                    alt={`${game_type} thumbnail`}
+                    width={250}
+                    height={250}
+                    className="rounded-lg"
+                />
+            </div>
 
-            {/* Descripción debajo del título */}
-            <p className="text-sm text-white">
-                Haz clic para configurar un {game_type}
-            </p>
+            {/* Título de la tarjeta */}
+            <h2 className="text-3xl text-center font-semibold mb-2 text-white game-card-title">{game_type}</h2>
         </div>
     );
 }
+
+
 

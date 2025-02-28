@@ -2,7 +2,7 @@
  * Página principal (IndexPage)
  *
  * Esta página presenta la interfaz principal donde el usuario puede seleccionar
- * el tipo de juego que desea configurar. Utiliza el componente `GameCard` para
+ * el tipo de juego que desea configurar. Utiliza el componente GameCard para
  * mostrar las opciones disponibles.
  *
  * @returns {JSX.Element} - Interfaz principal con opciones de selección de juegos.
@@ -23,24 +23,38 @@ export default function IndexPage() {
          * Sección principal de la página
          * - Contiene un título y una cuadrícula con las tarjetas de selección de juegos.
          */
-        <main className="flex flex-col justify-around min-h-screen min-w-full bg-[#563585] bg-[radial-gradient(circle_at_center,#2D1B47_10%,transparent_55%),repeating-conic-gradient(from_10deg_at_center,#2D1B47_0deg,#2D1B47_22.5deg,transparent_22.5deg,transparent_45deg)] relative overflow-hidden">
+        <main className="flex flex-col justify-around min-h-screen min-w-full relative overflow-hidden">
+            {/* Capa de fondo base (color púrpura sólido) */}
+            <div className="absolute inset-0 bg-[#563585]"></div>
+
+            {/* Capa de gradiente radial (estática) */}
+            <div className="absolute inset-0 bg-transparent" style={{
+                backgroundImage: 'radial-gradient(circle at center, #2D1B47 10%, transparent 55%)'
+            }}></div>
+
+            {/* Capa de rayos (con animación) */}
+            <div className="absolute inset-0 rays-only"></div>
 
             {/* Decorative elements */}
-      <div className="absolute inset-0">
-        <Star className="absolute  text-yellow-400 w-8 h-8 left-[15%] top-[20%]" fill="currentColor" />
-        <Star className="absolute  text-yellow-400 w-8 h-8 right-[30%] top-[25%]" fill="currentColor" />
-        <Star className="absolute  text-white w-8 h-8 right-[15%] top-[35%]" fill="currentColor" />
-        <Plus className="absolute  text-white w-8 h-8 left-[10%] top-[10%] opacity-50" />
-        <Plus className="absolute  text-white w-8 h-8 right-[10%] bottom-[20%] opacity-50" />
-      </div>
+            <div className="absolute inset-0 pointer-events-none">
+                <Star className="star text-yellow-400 w-8 h-8 left-[15%] top-[20%]" />
+                <Star className="star text-yellow-400 w-8 h-8 right-[30%] top-[25%]" />
+                <Star className="star text-white w-8 h-8 right-[15%] top-[35%]" />
+                <Star className="star text-white w-8 h-8 left-[60%] top-[50%]" />
+                <Star className="star text-white w-8 h-8 left-[80%] bottom-[40%]" />
+                <Plus className="plus text-white w-8 h-8 left-[10%] top-[10%] opacity-50" />
+                <Plus className="plus text-white w-8 h-8 right-[10%] bottom-[20%] opacity-50" />
+                <Plus className="plus text-white w-8 h-8 left-[70%] top-[30%] opacity-50" />
+            </div>
+
             {/* Título y descripción de la página */}
-            <div className="text-center mb-8">
+            <div className="text-center mb-8 relative z-10">
                 <h1 className="text-3xl font-bold text-white">Selecciona un Tipo de Juego</h1>
                 <p className="text-gray-50 mt-2">Elige el tipo de juego que deseas configurar y comienza a jugar.</p>
             </div>
 
             {/* Sección de selección de juegos */}
-            <section className="mb-8">
+            <section className="mb-8 relative z-10">
                 <div className="flex flex-wrap gap-16 justify-center items-center">
                     {/* Tarjeta para el tipo de juego "Crucigrama" */}
                     <GameCard game_type={"Crucigrama"} />

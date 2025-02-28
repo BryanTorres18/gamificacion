@@ -1,9 +1,319 @@
+/* ===========================
+   Importación de Fuentes
+=========================== */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
 
+/* ===========================
+   Tailwind CSS Base, Components, and Utilities
+=========================== */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ===========================
+   Estilo global para la fuente
+=========================== */
 body {
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Nunito', sans-serif; /* Se aplica la fuente 'Nunito' a todo el cuerpo */
 }
+
+/* ===========================
+   Animación de giro (spin) para efectos de fondo
+=========================== */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg); /* Comienza con una rotación de 0 grados */
+    }
+    100% {
+        transform: rotate(360deg); /* Rota 360 grados para un ciclo completo */
+    }
+}
+
+/* ===========================
+   Efecto de rayos animados (rays-only)
+=========================== */
+.rays-only {
+    position: absolute;
+    inset: -100%;
+    width: 300%; /* Se expande más allá del contenedor */
+    height: 300%;
+    background-color: transparent;
+    background-image: repeating-conic-gradient(from 0deg at center, #2D1B47 0deg, #2D1B47 15deg, transparent 15deg, transparent 30deg);
+    animation: spin 80s linear infinite; /* Efecto continuo de rotación */
+    pointer-events: none;
+    transform-origin: center; /* Hace que el giro ocurra desde el centro */
+}
+
+/* ===========================
+   Media Queries para Responsividad
+=========================== */
+@media (max-width: 768px) {
+    .rays-only {
+        inset: -150%;
+        width: 400%; /* Aumenta el tamaño en pantallas pequeñas */
+        height: 400%;
+    }
+}
+
+/* ===========================
+   Animaciones Base para Partículas
+=========================== */
+
+/* Animación de desplazamiento aleatorio */
+@keyframes floatAround {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        opacity: 0.7;
+    }
+    25% {
+        transform: translate(calc(50vw * var(--direction-x, 1)),
+        calc(20vh * var(--direction-y, 1)))
+        rotate(90deg) scale(var(--scale-factor, 1.2));
+        opacity: 1;
+    }
+    50% {
+        transform: translate(calc(20vw * var(--direction-x, 1)),
+        calc(50vh * var(--direction-y, 1)))
+        rotate(180deg) scale(var(--scale-factor, 0.8));
+        opacity: 0.8;
+    }
+    75% {
+        transform: translate(calc(-30vw * var(--direction-x, 1)),
+        calc(30vh * var(--direction-y, 1)))
+        rotate(270deg) scale(var(--scale-factor, 1.5));
+        opacity: 0.9;
+    }
+}
+
+/* Animación de brillo pulsante */
+@keyframes pulse {
+    0%, 100% { filter: brightness(1) drop-shadow(0 0 5px rgba(255, 255, 255, 0.3)); }
+    50% { filter: brightness(1.5) drop-shadow(0 0 15px rgba(255, 255, 255, 0.7)); }
+}
+
+/* ===========================
+   Configuración de Partículas
+=========================== */
+.star, .plus {
+    position: absolute;
+    pointer-events: none;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+    transform-origin: center;
+    will-change: transform, opacity;
+}
+
+/* Estrellas con animación principal + pulso */
+.star {
+    animation: floatAround 20s infinite, pulse 3s infinite;
+}
+
+/* Plus con animación principal más rápida */
+.plus {
+    animation: floatAround 15s infinite, pulse 4s infinite;
+}
+
+/* ===========================
+   Configuraciones Individuales para Partículas
+=========================== */
+
+/* Primera estrella */
+.star:nth-child(1) {
+    --direction-x: 1;
+    --direction-y: -1;
+    --scale-factor: 1.3;
+    animation-delay: 0s, 1s;
+    left: 20%;
+    top: 30%;
+}
+
+/* Segunda estrella */
+.star:nth-child(2) {
+    --direction-x: -1.2;
+    --direction-y: 0.8;
+    --scale-factor: 1.1;
+    animation-delay: 2s, 0s;
+    left: 65%;
+    top: 15%;
+}
+
+/* Tercera estrella */
+.star:nth-child(3) {
+    --direction-x: 0.7;
+    --direction-y: 1.1;
+    --scale-factor: 1.4;
+    animation-delay: 5s, 2s;
+    left: 40%;
+    top: 20%;
+}
+
+/* Cuarta estrella */
+.star:nth-child(4) {
+    --direction-x: -0.8;
+    --direction-y: -1;
+    --scale-factor: 0.9;
+    animation-delay: 1s, 3s;
+    left: 75%;
+    top: 35%;
+}
+
+/* Quinta estrella */
+.star:nth-child(5) {
+    --direction-x: 1.2;
+    --direction-y: 0.6;
+    --scale-factor: 1.2;
+    animation-delay: 7s, 1s;
+    left: 30%;
+    top: 60%;
+}
+
+/* Primer signo más */
+.plus:nth-child(6) {
+    --direction-x: -1.1;
+    --direction-y: -0.9;
+    --scale-factor: 1.5;
+    animation-delay: 0s, 2s;
+    left: 25%;
+    top: 25%;
+}
+
+/* Segundo signo más */
+.plus:nth-child(7) {
+    --direction-x: 0.9;
+    --direction-y: 1.2;
+    --scale-factor: 1.1;
+    animation-delay: 4s, 0s;
+    left: 50%;
+    top: 70%;
+}
+
+/* Tercer signo más */
+.plus:nth-child(8) {
+    --direction-x: -0.7;
+    --direction-y: 0.8;
+    --scale-factor: 1.3;
+    animation-delay: 6s, 3s;
+    left: 70%;
+    top: 40%;
+}
+
+/* ===========================
+   Efectos para Fondo con Rayos
+=========================== */
+.rays-only {
+    background: transparent;
+    overflow: hidden;
+}
+
+.rays-only::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150%;
+    height: 150%;
+    background: repeating-conic-gradient(
+            from 0deg,
+            rgba(45, 27, 71, 0.8) 0deg 10deg,
+            rgba(86, 53, 133, 0.6) 10deg 20deg
+    );
+    transform-origin: center;
+    transform: translate(-50%, -50%) rotate(0deg);
+    animation: rotateRays 25s linear infinite;
+}
+
+@keyframes rotateRays {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ===========================
+   Efectos Adicionales para Mejorar Visual
+=========================== */
+.star {
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
+    transition: all 0.3s ease;
+}
+
+.star.text-yellow-400 {
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.7));
+}
+
+.plus {
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+    transition: all 0.3s ease;
+}
+
+/* Efecto hover para todas las partículas si deseas interactividad */
+.star:hover, .plus:hover {
+    filter: brightness(1.5) drop-shadow(0 0 15px white);
+    transform: scale(1.2);
+}
+
+/* ===========================
+   Animación de Llamas al pasar el cursor por la tarjeta
+=========================== */
+
+@keyframes flameAnimation {
+    0% {
+        background-image: url('../../public/images/fire/fuego1.png');
+    }
+    25% {
+        background-image: url('../../public/images/fire/fuego2.png');
+    }
+    50% {
+        background-image: url('../../public/images/fire/fuego3.png');
+    }
+    75% {
+        background-image: url('../../public/images/fire/fuego4.png');
+    }
+    100% {
+        background-image: url('../../public/images/fire/fuego1.png');
+    }
+}
+
+/* Aplicación de la animación de llamas a la tarjeta */
+.flames-animation {
+    display: block;
+    width: 120%; /* Ancho aumentado para hacerla más grande horizontalmente */
+    height: 150px; /* Altura aumentada para llamas más grandes */
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center bottom;
+    opacity: 0; /* Inicialmente oculto */
+    transition: opacity 0.5s ease;
+    position: absolute;
+    top: -150px; /* Valor más negativo para subir más las llamas */
+    left: -10%; /* Centrado horizontal con el ancho ampliado */
+    right: 0;
+    z-index: 3;
+    transform: scale(1.3); /* Escala adicional para hacer las llamas más grandes */
+}
+
+/* Cuando el cursor está sobre la tarjeta, las llamas se muestran y animan */
+.game-card-container:hover .flames-animation {
+    opacity: 1; /* Hace visible la animación de llamas */
+    animation: flameAnimation 1s infinite;
+}
+
+/* ===========================
+   Estilo para el contenedor de la tarjeta
+=========================== */
+.game-card-container {
+    position: relative;
+    display: inline-block;
+    overflow: visible; /* Para que las llamas puedan sobresalir */
+    z-index: 0;
+    margin-top: 100px; /* Margen aumentado para dar más espacio a las llamas */
+}
+
+/* Imagen dentro de la tarjeta */
+.game-card-image-container {
+    position: relative;
+    z-index: 2;
+}
+
+
+
+
