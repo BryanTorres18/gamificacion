@@ -10,17 +10,17 @@ const CrucigramaBoard = ({ gameData }) => {
     const [questionNumbers, setQuestionNumbers] = useState(new Map());
     const [showQuestions, setShowQuestions] = useState(true);
     const [gridSize, setGridSize] = useState(18);
-    const [cellSize, setCellSize] = useState(30);
+    const [cellSize, setCellSize] = useState(35);
 
     useEffect(() => {
         const handleResize = () => {
             const width = window.innerWidth;
             if (width < 640) { // mobile
-                setCellSize(20);
-            } else if (width < 1024) { // tablet
                 setCellSize(25);
-            } else { // desktop
+            } else if (width < 1024) { // tablet
                 setCellSize(30);
+            } else { // desktop
+                setCellSize(35);
             }
         };
 
