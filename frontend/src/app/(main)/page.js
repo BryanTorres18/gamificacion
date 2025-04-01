@@ -36,7 +36,7 @@ export default function IndexPage() {
             <div className="absolute inset-0 rays-only"></div>
 
             {/* Decorative elements */}
-            <div className="absolute inset-0 pointer-events-none">
+            {/*<div className="absolute inset-0 pointer-events-none">
                 <Star className="star text-yellow-400 w-8 h-8 left-[15%] top-[20%]" />
                 <Star className="star text-yellow-400 w-8 h-8 right-[30%] top-[25%]" />
                 <Star className="star text-white w-8 h-8 right-[15%] top-[35%]" />
@@ -45,7 +45,7 @@ export default function IndexPage() {
                 <Plus className="plus text-white w-8 h-8 left-[10%] top-[10%] opacity-50" />
                 <Plus className="plus text-white w-8 h-8 right-[10%] bottom-[20%] opacity-50" />
                 <Plus className="plus text-white w-8 h-8 left-[70%] top-[30%] opacity-50" />
-            </div>
+            </div>*/}
 
             {/* Título y descripción de la página */}
             <div className="text-center mb-8 relative z-10">

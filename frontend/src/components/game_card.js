@@ -39,11 +39,8 @@ export default function GameCard({ game_type }) {
         // Contenedor principal de la tarjeta
         <div
             onClick={handleNavigation}
-            className="game-card-container z-[1] block border-4 border-[#6f00a8] rounded-3xl shadow-md p-4 bg-purple-900 hover:bg-[#dec5e3] transition cursor-pointer relative"
+            className="game-card-container block border-4 border-[#6f00a8] rounded-3xl shadow-md p-4 bg-purple-900 hover:bg-[#dec5e3] transition cursor-pointer relative"
         >
-            {/* Contenedor de la animación de llamas */}
-            <div className="flames-animation"></div>
-
             {/* Contenedor de la imagen del juego */}
             <div className="game-card-image-container mb-4 aspect-square w-full h-auto">
                 <Image
@@ -57,6 +54,9 @@ export default function GameCard({ game_type }) {
 
             {/* Título de la tarjeta */}
             <h2 className="text-3xl text-center font-semibold mb-2 text-white game-card-title">{game_type}</h2>
+
+            {/* Contenedor de la animación de llamas */}
+            <div className="flames-animation"></div>
         </div>
     );
 }

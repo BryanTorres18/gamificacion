@@ -1,23 +1,11 @@
 import { useState, useEffect } from "react";
 import { toast } from "sonner";  // Importa Sonner para mostrar las alertas
 
-/**
- * Componente DynamicFields
- *
- * Este componente permite gestionar dinámicamente un conjunto de campos de entrada
- * para enunciados y respuestas. Ofrece funcionalidades para añadir más campos y
- * eliminar los existentes, asegurando que siempre haya al menos un campo visible.
- *
- * @param {Object} props - Propiedades del componente.
- * @param {Array} props.fields - Lista de campos actuales (cada campo es un objeto con `enunciado` y `respuesta`).
- * @param {function} props.setFields - Función para actualizar la lista de campos.
- * @returns {JSX.Element} - Una interfaz para gestionar campos dinámicos de entrada.
- */
 export default function DynamicFields({ fields, setFields }) {
 
     /**
      * Maneja los cambios en los valores de los campos.
-     * Aplica restricciones específicas para el campo "respuesta".
+     * Aplica restricciones específicas para el campo "respuesta" y "enunciado".
      *
      * @param {number} index - Índice del campo que se está modificando.
      * @param {string} key - Clave del campo (`enunciado` o `respuesta`).
@@ -33,6 +21,14 @@ export default function DynamicFields({ fields, setFields }) {
                 .replace(/[^A-Z]/g, ""); // Eliminar caracteres no alfabéticos
 
             if (formattedValue.length <= 10) {
+                updatedFields[index][key] = formattedValue;
+            }
+        } else if (key === "enunciado") {
+            // Restringir valores para el campo "enunciado"
+            const formattedValue = value
+                .replace(/,/g, ""); // Eliminar comas
+
+            if (formattedValue.length <= 500) {
                 updatedFields[index][key] = formattedValue;
             }
         } else {
@@ -121,6 +117,7 @@ export default function DynamicFields({ fields, setFields }) {
                                 onChange={(e) => handleFieldChange(index, "enunciado", e.target.value)}
                                 className="p-2 border rounded-md w-full focus:border-purple-400 focus:outline-none"
                                 placeholder="Ingrese el enunciado"
+                                maxLength={500} // Limitar a 500 caracteres
                             />
                         </div>
 

@@ -276,7 +276,7 @@ body {
 /* Aplicación de la animación de llamas a la tarjeta */
 .flames-animation {
     display: block;
-    width: 120%; /* Ancho aumentado para hacerla más grande horizontalmente */
+    width: 200%; /* Ancho aumentado para hacerla más grande horizontalmente */
     height: 150px; /* Altura aumentada para llamas más grandes */
     background-repeat: no-repeat;
     background-size: contain;
@@ -284,10 +284,10 @@ body {
     opacity: 0; /* Inicialmente oculto */
     transition: opacity 0.5s ease;
     position: absolute;
-    top: -150px; /* Valor más negativo para subir más las llamas */
-    left: -10%; /* Centrado horizontal con el ancho ampliado */
+    top: -170px; /* Valor más negativo para subir más las llamas */
+    left: -50%; /* Centrado horizontal con el ancho ampliado */
     right: 0;
-    z-index: 3;
+    z-index: 1;
     transform: scale(1.3); /* Escala adicional para hacer las llamas más grandes */
 }
 
@@ -304,14 +304,14 @@ body {
     position: relative;
     display: inline-block;
     overflow: visible; /* Para que las llamas puedan sobresalir */
-    z-index: 0;
-    margin-top: 100px; /* Margen aumentado para dar más espacio a las llamas */
+    z-index: 2;
+    margin-top: 100px;
 }
 
 /* Imagen dentro de la tarjeta */
 .game-card-image-container {
     position: relative;
-    z-index: 2;
+    z-index: 3;
 }
 
 

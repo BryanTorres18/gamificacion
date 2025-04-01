@@ -74,16 +74,10 @@ export default function GamePage({ params }) {
 
                             {/* Lista de preguntas para Sopa de Letras */}
                             <div className="lg:w-1/3 lg:sticky lg:top-4 order-1 lg:order-none mt-8 lg:mt-0">
-                                <div className="bg-white rounded-xl shadow-lg p-6">
-                                    <div className="mb-4">
-                                        <div
-                                            className="bg-headergamestext text-amber-50 text-center py-2 px-4 rounded-lg font-bold text-lg">
-                                            Palabras
-                                        </div>
-                                    </div>
+                                <div className="bg-white rounded-xl shadow-lg p-6 h-full">
                                     <QuestionList
                                         questions={Object.entries(game.data)
-                                            .filter(([key]) => key !== "size") // Filtra "size"
+                                            .filter(([key]) => key !== "size")
                                             .map(([question, answer]) => ({
                                                 question,
                                                 answer,

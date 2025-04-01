@@ -591,7 +591,7 @@ const CrucigramaBoard = ({ gameData }) => {
                     variants={containerVariants}
                 >
                     <motion.div
-                        className="bg-white rounded-xl shadow-lg p-6 space-y-8"
+                        className="bg-white rounded-xl shadow-lg p-6 space-y-8 h-full"
                         variants={sectionVariants}
                         initial="hidden"
                         animate="visible"
