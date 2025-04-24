@@ -5,6 +5,7 @@ import DynamicFields from "@/components/createComponents/dynamicFields";
 import SizeField from "@/components/createComponents/sizeField";
 import { useSearchParams } from "next/navigation";
 import { Toaster, toast } from "sonner";  // Importa Sonner para mostrar las alertas
+import { Suspense } from "react";
 
 /**
  * Página para la creación de juegos en la plataforma de gamificación.
@@ -13,7 +14,7 @@ import { Toaster, toast } from "sonner";  // Importa Sonner para mostrar las ale
  * @component
  * @returns {JSX.Element} - Componente que renderiza la interfaz de creación de juegos.
  */
-export default function CreateGamePage() {
+function CreateGamePage() {
     // Obtiene los parámetros de la URL
     const searchParams = useSearchParams();
     const gameType = searchParams.get("game_type") || "Desconocido";
@@ -184,6 +185,14 @@ export default function CreateGamePage() {
             {/* Toaster para mostrar las alertas */}
             <Toaster />
         </main>
+    );
+}
+
+export default function SuspendedCreateGamePage() {
+    return (
+        <Suspense fallback={<div className="p-6 text-[#7f5c9c]">Cargando...</div>}>
+            <CreateGamePage />
+        </Suspense>
     );
 }
 
