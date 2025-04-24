@@ -27,7 +27,7 @@ export default function GamePage({ params }) {
         if (id) {
             const fetchGame = async () => {
                 try {
-                    const response = await fetch(`http://127.0.0.1:8000/games/${id}`);
+                    const response = await fetch(`https://ld2hepukpj.execute-api.us-east-1.amazonaws.com/games/${id}`);
                     if (response.ok) {
                         const data = await response.json();
                         setGame(data);

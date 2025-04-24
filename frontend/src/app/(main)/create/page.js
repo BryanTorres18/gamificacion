@@ -100,7 +100,7 @@ export default function CreateGamePage() {
 
         try {
             // Envío de los datos al backend (API de juegos)
-            const response = await fetch("http://127.0.0.1:8000/games/", {
+            const response = await fetch("https://ld2hepukpj.execute-api.us-east-1.amazonaws.com/games", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -113,6 +113,7 @@ export default function CreateGamePage() {
             }
 
             const result = await response.json();
+            console.log(result.id)
             console.log("Juego guardado exitosamente:", result);
             toast.success("¡Juego creado exitosamente!", {
                 style: {
