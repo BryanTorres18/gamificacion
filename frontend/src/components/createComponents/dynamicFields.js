@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { toast } from "sonner";  // Importa Sonner para mostrar las alertas
 
 export default function DynamicFields({ fields, setFields }) {
@@ -136,13 +135,15 @@ export default function DynamicFields({ fields, setFields }) {
                         </div>
 
                         {/* Botón para eliminar el campo */}
-                        <button
-                            type="button"
-                            onClick={() => removeField(index)}
-                            className="bg-[#7f5c9c] hover:bg-[#dec5e3] ml-4 text-white hover:text-red-700 font-medium py-2 px-4 rounded-md"
-                        >
-                            Eliminar
-                        </button>
+                        <div className="flex justify-center md:justify-end mt-2">
+                            <button
+                                type="button"
+                                onClick={() => removeField(index)}
+                                className="bg-[#7f5c9c] hover:bg-[#dec5e3] text-white hover:text-red-700 font-medium py-2 px-6 rounded-md w-full md:w-auto"
+                            >
+                                Eliminar
+                            </button>
+                        </div>
                     </div>
                 </div>
             ))}
