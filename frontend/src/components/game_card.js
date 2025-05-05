@@ -36,27 +36,24 @@ export default function GameCard({ game_type }) {
     };
 
     return (
-        // Contenedor principal de la tarjeta
         <div
             onClick={handleNavigation}
-            className="game-card-container block border-4 border-[#6f00a8] rounded-3xl shadow-md p-4 bg-purple-900 hover:bg-[#dec5e3] transition cursor-pointer relative"
+            className="game-card-container block border-4 border-[#6f00a8] rounded-3xl shadow-md p-0 bg-purple-900 cursor-pointer relative w-72 h-80 overflow-hidden"
         >
-            {/* Contenedor de la imagen del juego */}
-            <div className="game-card-image-container mb-4 aspect-square w-full h-auto">
+            {/* Imagen de fondo */}
+            <div className="relative w-full h-full">
                 <Image
                     src={getImagePath()}
                     alt={`${game_type} thumbnail`}
-                    width={250}
-                    height={250}
-                    className="rounded-lg"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 250px"
+                    className="object-cover"
+                    priority
                 />
             </div>
 
-            {/* Título de la tarjeta */}
-            <h2 className="text-3xl text-center font-semibold mb-2 text-white game-card-title">{game_type}</h2>
-
-            {/* Contenedor de la animación de llamas */}
-            <div className="flames-animation"></div>
+            {/* Llamas animadas u otros overlays si los deseas */}
+            <div className="flames-animation absolute top-0 left-0 w-full h-full pointer-events-none"></div>
         </div>
     );
 }

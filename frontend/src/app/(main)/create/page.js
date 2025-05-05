@@ -6,6 +6,7 @@ import SizeField from "@/components/createComponents/sizeField";
 import { useSearchParams } from "next/navigation";
 import { Toaster, toast } from "sonner";  // Importa Sonner para mostrar las alertas
 import { Suspense } from "react";
+import Link from "next/link"
 
 /**
  * Página para la creación de juegos en la plataforma de gamificación.
@@ -36,6 +37,11 @@ function CreateGamePage() {
             setShowSizeField(false); // Oculta el campo si no es necesario
         }
     }, [gameType]);
+
+    const gameLogos = {
+        "Sopa de Letras": "/logos/logoSopaDeLetras.png",
+        "Crucigrama": "/logos/logoCrucigrama.png",
+    };
 
     /**
      * Maneja el envío del formulario para crear un nuevo juego.
@@ -152,9 +158,18 @@ function CreateGamePage() {
         <main className="flex flex-col min-h-screen bg-white">
             {/* Header con estilo similar al mockup */}
             <div className="w-full bg-[#dec5e3] py-4">
-                <h1 className="text-4xl md:text-5xl text-[#7f5c9c] font-bold px-6 md:px-8">
-                    {gameType}
-                </h1>
+                <Link href="/" className="flex items-center gap-4 px-6 md:px-8 hover:opacity-80 transition-opacity">
+                    {gameLogos[gameType] && (
+                        <img
+                            src={gameLogos[gameType]}
+                            alt={`Logo de ${gameType}`}
+                            className="w-12 h-12 object-contain"
+                        />
+                    )}
+                    <h1 className="text-4xl md:text-5xl text-[#7f5c9c] font-bold">
+                        {gameType}
+                    </h1>
+                </Link>
             </div>
 
             {/* Contenido principal con padding consistente */}

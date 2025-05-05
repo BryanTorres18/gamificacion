@@ -48,7 +48,7 @@ export default function IndexPage() {
             </div>*/}
 
             {/* Título y descripción de la página */}
-            <div className="text-center mb-8 relative z-10">
+            <div className="text-center mb-3 relative z-10 pt-6 sm:pt-10">
                 <h1 className="text-3xl font-bold text-white">Selecciona un Tipo de Juego</h1>
                 <p className="text-gray-50 mt-2">Elige el tipo de juego que deseas configurar y comienza a jugar.</p>
             </div>
