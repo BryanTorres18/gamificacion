@@ -7,6 +7,7 @@ import { useSearchParams } from "next/navigation";
 import { Toaster, toast } from "sonner";  // Importa Sonner para mostrar las alertas
 import { Suspense } from "react";
 import Link from "next/link"
+import Image from "next/image";
 
 /**
  * Página para la creación de juegos en la plataforma de gamificación.
@@ -160,10 +161,12 @@ function CreateGamePage() {
             <div className="w-full bg-[#dec5e3] py-4">
                 <Link href="/" className="flex items-center gap-4 px-6 md:px-8 hover:opacity-80 transition-opacity">
                     {gameLogos[gameType] && (
-                        <img
+                        <Image
                             src={gameLogos[gameType]}
                             alt={`Logo de ${gameType}`}
-                            className="w-12 h-12 object-contain"
+                            width={40}
+                            height={40}
+                            className="object-contain"
                         />
                     )}
                     <h1 className="text-4xl md:text-5xl text-[#7f5c9c] font-bold">
