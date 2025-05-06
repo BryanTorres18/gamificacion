@@ -591,13 +591,13 @@ const CrucigramaBoard = ({ gameData }) => {
                     variants={containerVariants}
                 >
                     <motion.div
-                        className="bg-white rounded-xl shadow-lg p-6 space-y-8 h-full"
+                        className="bg-white rounded-xl shadow-lg p-6 space-y-8 h-[calc(100vh-2rem)] overflow-hidden flex flex-col"
                         variants={sectionVariants}
                         initial="hidden"
                         animate="visible"
                     >
                         {/* Verticales */}
-                        <motion.div variants={sectionVariants}>
+                        <motion.div variants={sectionVariants} className="flex flex-col">
                             <motion.h2
                                 className="text-3xl font-bold mb-4 text-purple-600"
                                 variants={questionVariants}
@@ -605,8 +605,9 @@ const CrucigramaBoard = ({ gameData }) => {
                                 Vertical
                             </motion.h2>
                             <motion.div
-                                className="space-y-3"
+                                className="space-y-3 overflow-y-auto flex-grow mb-4 pr-2"
                                 variants={sectionVariants}
+                                style={{ maxHeight: "30vh" }}
                             >
                                 <AnimatePresence>
                                     {questions
@@ -615,16 +616,16 @@ const CrucigramaBoard = ({ gameData }) => {
                                             <motion.div
                                                 key={question}
                                                 className={`
-                                        p-4 
-                                        rounded-lg 
-                                        border
-                                        shadow-lg
-                                        transition-all 
-                                        duration-300
-                                        ${completedWords.has(question)
+                        p-4 
+                        rounded-lg 
+                        border
+                        shadow-lg
+                        transition-all 
+                        duration-300
+                        ${completedWords.has(question)
                                                     ? 'bg-[#DEC5E3] border-[#7F5C9C]'
                                                     : 'bg-white border-gray-200 hover:border-purple-300'}
-                                    `}
+                    `}
                                                 variants={questionVariants}
                                                 initial="hidden"
                                                 animate="visible"
@@ -651,7 +652,7 @@ const CrucigramaBoard = ({ gameData }) => {
                         </motion.div>
 
                         {/* Horizontales - mismo patrón que Verticales */}
-                        <motion.div variants={sectionVariants}>
+                        <motion.div variants={sectionVariants} className="flex flex-col">
                             <motion.h2
                                 className="text-3xl font-bold mb-4 text-purple-600"
                                 variants={questionVariants}
@@ -659,8 +660,9 @@ const CrucigramaBoard = ({ gameData }) => {
                                 Horizontal
                             </motion.h2>
                             <motion.div
-                                className="space-y-3"
+                                className="space-y-3 overflow-y-auto flex-grow pr-2"
                                 variants={sectionVariants}
+                                style={{ maxHeight: "30vh" }}
                             >
                                 <AnimatePresence>
                                     {questions
@@ -669,16 +671,16 @@ const CrucigramaBoard = ({ gameData }) => {
                                             <motion.div
                                                 key={question}
                                                 className={`
-                                        p-4 
-                                        rounded-lg 
-                                        border
-                                        shadow-lg
-                                        transition-all 
-                                        duration-300
-                                        ${completedWords.has(question)
+                        p-4 
+                        rounded-lg 
+                        border
+                        shadow-lg
+                        transition-all 
+                        duration-300
+                        ${completedWords.has(question)
                                                     ? 'bg-[#DEC5E3] border-[#7F5C9C]'
                                                     : 'bg-white border-gray-200 hover:border-purple-300'}
-                                    `}
+                    `}
                                                 variants={questionVariants}
                                                 initial="hidden"
                                                 animate="visible"
