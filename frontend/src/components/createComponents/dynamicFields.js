@@ -27,7 +27,7 @@ export default function DynamicFields({ fields, setFields }) {
             const formattedValue = value
                 .replace(/,/g, ""); // Eliminar comas
 
-            if (formattedValue.length <= 500) {
+            if (formattedValue.length <= 600) {
                 updatedFields[index][key] = formattedValue;
             }
         } else {
@@ -116,7 +116,7 @@ export default function DynamicFields({ fields, setFields }) {
                                 onChange={(e) => handleFieldChange(index, "enunciado", e.target.value)}
                                 className="p-2 border rounded-md w-full focus:border-purple-400 focus:outline-none"
                                 placeholder="Ingrese el enunciado"
-                                maxLength={500} // Limitar a 500 caracteres
+                                maxLength={600} // Limitar a 500 caracteres
                             />
                         </div>
 

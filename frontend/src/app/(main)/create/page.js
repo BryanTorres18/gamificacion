@@ -104,8 +104,6 @@ function CreateGamePage() {
             }, {}),
         };
 
-        console.log("Datos enviados:", payload);
-
         try {
             // Envío de los datos al backend (API de juegos)
             const response = await fetch("https://ld2hepukpj.execute-api.us-east-1.amazonaws.com/games", {
@@ -121,8 +119,6 @@ function CreateGamePage() {
             }
 
             const result = await response.json();
-            console.log(result.id)
-            console.log("Juego guardado exitosamente:", result);
             toast.success("¡Juego creado exitosamente!", {
                 style: {
                     color: 'white',
