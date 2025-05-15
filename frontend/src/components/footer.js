@@ -16,7 +16,7 @@ function Footer() {
          * - mt-auto: Permite que el pie de página se mantenga en la parte inferior de la página.
          * - w-screen: Asegura que ocupe todo el ancho de la pantalla.
          */
-        <footer className="bg-gray-800 text-white py-4 mt-auto w-screen">
+        <footer className="bg-gray-800 text-white py-4 mt-auto w-full">
             {/* Contenedor centrado para el contenido del pie de página */}
             <div className="container mx-auto text-center">
                 {/* Texto de derechos reservados */}

@@ -33,9 +33,7 @@ export default function RootLayout({ children }) {
             <title>{metadata.title}</title>
         </head>
         <body className="text-gray-900 bg-base min-h-screen flex flex-col">
-        <div className="flex-grow bg-base">
-            {children}
-        </div>
+        {children}
         <Footer />
         </body>
         </html>
